@@ -1,0 +1,89 @@
+.table-container {
+  border: 1px solid #666666;
+  width: fit-content;
+  border-radius: 4px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+thead {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+th {
+  padding: 0px 16px;
+  background: #f2f2f2;
+}
+
+tr {
+  width: 598px;
+  height: 48px;
+}
+
+tbody {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+td {
+  padding: 0px 16px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.row3 {
+  background: #f2f2f2;
+}
+
+.colum1 {
+  position: relative;
+  display: inline;
+}
+
+.colum1-icon::after {
+  content: '\ef4a';
+  font-size: 25px;
+  position: absolute;
+  top: 13px;
+}
+
+.colum2 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1565c0;
+}
+
+.table-nav {
+  border-top: 1px solid #666666;
+  width: 583px;
+  height: 48px;
+  background-color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+
+.table-nav-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.table-nav-icon-1::after {
+  content: '\e5cf';
+  color: #666666;
+  /* font-size: 14px; */
+}
+.table-nav-icon-2::after {
+  content: '\e5cb';
+  color: #666666;
+  /* font-size: 14px; */
+}
+.table-nav-icon-3:after {
+  content: '\e409';
+  color: #666666;
+  /* font-size: 14px; */
+}
