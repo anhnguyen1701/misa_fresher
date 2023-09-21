@@ -86,7 +86,7 @@
       </label>
     </div>
 
-    <!-- table -->
+    <!-- dialog -->
     <div class="dialog-container">
       <div class="dialog dialog-default">
         <div class="dialog-default-content">
@@ -107,10 +107,85 @@
       </div>
     </div>
 
+    <!-- popup -->
+    <div class="pop-container">
+      <div class="popup dialog-default">
+        <div class="dialog-default-content">
+          <div class="dialog-default-head">
+            <span>Tiêu đề</span>
+            <icon class="material-symbols-outlined dialog-deafult-icon"></icon>
+          </div>
+
+          <div class="dialog-default-body">
+            <span>Mô tả</span>
+            <label class="popup-tf-1"
+              >Label 1
+              <input class="popup-tf-1-inp" type="text" />
+            </label>
+
+            <label class="popup-tf-2"
+              >Label 2
+              <select class="popup-tf-2-inp">
+                <option value="0">- Không chọn -</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="dialog-default-btn">
+            <button class="dialog-btn dialog-second-btn">Button 2</button>
+            <button class="dialog-btn dialog-primary-btn">Button 1</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- form -->
+    <div class="form-container">
+      <div class="form">
+        <div class="form-content">
+          <span class="form-text-1">Đăng ký tài khoản</span>
+          <label class="tf form-tf-1"
+            >Họ và tên
+            <input
+              class="form-tf-1-inp"
+              type="text"
+              placeholder="Họ tên đầy đủ"
+            />
+          </label>
+
+          <label class="form-tf-2"
+            >Giới tính
+            <div class="form-tf-2-cb">
+              <input class="form-tf-2-inp" type="radio" value="Nam" />
+              <span class="form-tf-2-text">Nam</span>
+            </div>
+            <div class="form-tf-2-cb">
+              <input class="form-tf-2-inp" type="radio" value="Nữ" />
+              <span class="form-tf-2-text">Nữ</span>
+            </div>
+          </label>
+
+          <label class="tf form-tf-3"
+            >Ngày sinh
+            <input class="form-tf-3-inp" type="text" placeholder="dd/mm/yyyy" />
+          </label>
+
+          <label class="tf form-tf-4"
+            >Địa chỉ email
+            <input
+              class="form-tf-4-inp"
+              type="text"
+              placeholder="example@email.com"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
     <!-- table -->
-    <div class="table-container">
-      <table>
-        <thead>
+    <!-- <div class="table-container">
+  <table>
+    <thead>
           <tr>
             <th><input type="checkbox" /></th>
             <th>Header A</th>
@@ -198,6 +273,6 @@
           style="margin-left: 16px"
         ></span>
       </div>
-    </div>
+    </div> -->
   </body>
 </html>
