@@ -10,20 +10,15 @@
 
 .primary-btn {
   background-color: #50b83c;
-  width: 79px;
+  width: 80px;
   height: 36px;
   border-radius: 4px;
   border: 0px;
   cursor: pointer;
-}
-
-.primary-btn-text {
   color: #ffffff;
   /* font-family: 'Roboto', sans-serif; */
   font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0;
-  line-height: 0;
 }
 
 .second-btn {
@@ -33,15 +28,10 @@
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   cursor: pointer;
-}
-
-.second-btn-text {
   color: #1f1f1f;
   /* font-family: 'Roboto', sans-serif; */
   font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0;
-  line-height: 0;
 }
 
 .link-btn {
@@ -68,43 +58,3 @@
   color: #50b83c;
 }
 
-/* text filed */
-
-.textfiled-container {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.lb {
-  margin: 10px;
-  font-size: 14px;
-}
-
-.normal-lb {
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-}
-
-.normal-inp {
-  width: 300px;
-  height: 36px;
-  padding: 0px 12px;
-  margin-top: 8px;
-  border-radius: 4px;
-  border: 1px solid #e6e6e6;
-}
-
-.normal-inp::placeholder {
-  color: #999999;
-}
-
-.normal-inp:hover {
-  background-color: #e6e6e6;
-  cursor: pointer;
-}
-
-.normal-inp:focus {
-  border: 1px solid #50b83c;
-  outline: none;
-}

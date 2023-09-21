@@ -1,0 +1,84 @@
+.dialog-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.dialog {
+  margin: 10px;
+  width: 400px;
+  height: 173px;
+}
+
+.dialog-default {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.dialog-default-content {
+  margin: 24px;
+}
+
+.dialog-default-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.dialog-default-head > span {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.dialog-deafult-icon::after {
+  content: '\e5cd';
+  font-size: 18px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.dialog-default-body {
+  margin-top: 24px;
+}
+
+.dialog-default-body > span {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.dialog-default-btn {
+  margin-top: 32px;
+  display: flex;
+  justify-content: end;
+}
+
+.dialog-btn {
+  border: 0;
+}
+
+.dialog-primary-btn {
+  margin-left: 8px;
+  background-color: #50b83c;
+  width: 80px;
+  height: 36px;
+  border-radius: 4px;
+  border: 0px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.dialog-second-btn {
+    background-color: #fff;
+    width: 80px;
+    height: 36px;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #1f1f1f;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
