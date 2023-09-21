@@ -86,6 +86,19 @@
       </label>
     </div>
 
+    <!-- combobox -->
+    <div class="cb-container">
+      <div class="cb">
+        <label class="cb-default"
+          >Field label
+          <select class="cb-default-inp">
+            <span class="pivot"> </span>
+            <option value="0">- Chọn giá trị -</option>
+          </select>
+        </label>
+        <span class="cb-default-text">Error message</span>
+      </div>
+    </div>
     <!-- dialog -->
     <div class="dialog-container">
       <div class="dialog dialog-default">
@@ -168,6 +181,7 @@
           <label class="tf form-tf-3"
             >Ngày sinh
             <input class="form-tf-3-inp" type="text" placeholder="dd/mm/yyyy" />
+            <span class="material-symbols-outlined form-icon"></span>
           </label>
 
           <label class="tf form-tf-4"
@@ -178,14 +192,19 @@
               placeholder="example@email.com"
             />
           </label>
+
+          <div class="form-btn">
+            <button class="dialog-second-btn">Hủy</button>
+            <button class="dialog-primary-btn">Đăng ký</button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- table -->
-    <!-- <div class="table-container">
-  <table>
-    <thead>
+    <div class="table-container">
+      <table>
+        <thead>
           <tr>
             <th><input type="checkbox" /></th>
             <th>Header A</th>
@@ -273,6 +292,6 @@
           style="margin-left: 16px"
         ></span>
       </div>
-    </div> -->
+    </div>
   </body>
 </html>
