@@ -4,6 +4,7 @@
 @import url(./components/table.css);
 @import url(./components/popup.css);
 @import url(./components/form.css);
+@import url(./components/combobox.css);
 
 * {
   margin: 0;
