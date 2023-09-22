@@ -65,6 +65,7 @@ td {
   font-size: 14px;
   display: flex;
   align-items: center;
+  position: relative;
   /* justify-content: space-between; */
 }
 
@@ -86,4 +87,81 @@ td {
 .table-nav-icon-3:after {
   content: '\e409';
   color: #666666;
+}
+
+.table-nav-float-list {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 400;
+  width: 76px;
+  background-color: white;
+  border: 1px solid #666666;
+  border-radius: 3px;
+  position: absolute;
+  top: -150px;
+  left: 322px;
+}
+
+.table-nav-float-list span {
+  padding: 12px;
+}
+
+.table-nav-float-list--text1 {
+  position: relative;
+  color: #50b83c;
+}
+
+.table-nav-float-list--text1--icon::after {
+  position: absolute;
+  content: '\e876';
+  top: 9px;
+  font-size: 20px;
+}
+
+.table-nav-float-icon {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: -96px;
+  left: 500px;
+}
+
+.circle {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid #666666;
+  display: inline-block;
+}
+
+.circle-1 {
+  position: relative;
+  margin-right: 8px;
+}
+
+.circle-icon-1::after {
+  content: '\e3c9';
+  font-size: 22px;
+  color: #666666;
+  top: 10px;
+  left: 4px;
+  top: 4px;
+  position: absolute;
+}
+
+.circle-2 {
+  position: relative;
+  margin-right: 8px;
+}
+
+.circle-icon-2::after {
+  content: '\e5d3';
+  font-size: 22px;
+  color: #666666;
+  top: 10px;
+  left: 4px;
+  top: 4px;
+  position: absolute;
 }
