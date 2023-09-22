@@ -58,3 +58,30 @@
   color: #50b83c;
 }
 
+.icon-text-btn {
+  background-color: #50b83c;
+  width: 90px;
+  height: 36px;
+  border-radius: 4px;
+  border: 0px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px;
+  position: relative;
+ 
+}
+
+.icon-text-btn-icon::after {
+  content: '\e145';
+  font-size: 22px;
+  color: white;
+  position: absolute;
+  top: 7px;
+  left: 5px;
+}
+
+.icon-text-btn-txt{
+  margin-left: 10px;
+}
