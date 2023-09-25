@@ -1,0 +1,35 @@
+* {
+  margin: 0px;
+}
+
+/* layout 2 */
+.container {
+}
+
+.header {
+  float: top;
+  background-color: aqua;
+  height: 10vh;
+  width: 100vw;
+}
+
+.menu {
+  float: left;
+  background-color: antiquewhite;
+  width: 20vw;
+  height: 90vh;
+}
+
+.body {
+  float: top;
+  background-color: aquamarine;
+  width: 100vw;
+  height: 80vh;
+}
+
+.footer {
+  float: left;
+  background-color: beige;
+  height: 10vh;
+  width: 100vw;
+}
