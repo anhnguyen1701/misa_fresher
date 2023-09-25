@@ -1,10 +1,10 @@
-@import url(./components/button.css);
-@import url(./components/textfield.css);
-@import url(./components/dialog.css);
-@import url(./components/table.css);
-@import url(./components/popup.css);
-@import url(./components/form.css);
-@import url(./components/combobox.css);
+@import url(./base/button.css);
+@import url(./base/textfield.css);
+@import url(./base/dialog.css);
+@import url(./base/table.css);
+@import url(./base/popup.css);
+@import url(./base/form.css);
+@import url(./base/combobox.css);
 
 * {
   margin: 0;
