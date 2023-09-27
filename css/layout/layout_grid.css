@@ -29,7 +29,7 @@
 }
 
 .footer {
-  background-color: beige;
+  background-color: red;
   grid-column: 1 / span 3;
   grid-row: 3;
 }
