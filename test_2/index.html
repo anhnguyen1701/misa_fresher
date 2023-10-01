@@ -11,7 +11,7 @@
     />
   </head>
   <body>
-    < class="container">
+    <div class="container">
       <header>
         <div class="header__left">
           <div class="header__sidebar">
@@ -67,24 +67,24 @@
         <div class="main__table">
           <div class="table__nav">
             <div>
-              <span class="table__nav--select">Đã chọn <strong>1005</strong></span>
+              <span class="table__nav--select"
+                >Đã chọn <strong>1005</strong></span
+              >
               <span class="table__nav--cancel-select">Bỏ chọn</span>
               <button class="table__nav--delete-all">
-                <span class="material-symbols-outlined icon">
-                  delete
-                </span>
+                <span class="material-symbols-outlined icon"> delete </span>
                 <span>Xóa tất cả</span>
               </button>
             </div>
             <div>
-              <button class="table__nav-add">
-                <span class="material-symbols-outlined icon">
-                  add
-                </span>
+              <button
+                class="table__nav-add"
+                onclick="document.getElementById('add-modal').style.display='block'"
+              >
+                <span class="material-symbols-outlined icon"> add </span>
                 <span class="text">Thêm mới</span>
               </button>
             </div>
-            </button>
           </div>
           <div class="table__main">
             <table>
@@ -109,7 +109,7 @@
                   <td>12,333,444</td>
                   <td>Ha noi</td>
                 </tr>
-               
+                <tr>
                   <td><input type="checkbox" /></td>
                   <td>NVCC</td>
                   <td>abcdf</td>
@@ -118,7 +118,6 @@
                   <td>12,333,444</td>
                   <td>Ha noi</td>
                 </tr>
-               
               </tbody>
             </table>
           </div>
@@ -129,7 +128,9 @@
             <div class="table__footer--right">
               <span>Số bản ghi/trang</span>
               <span class="table__footer--page-number">10</span>
-              <span class="material-symbols-outlined table__footer--page-more-icon">
+              <span
+                class="material-symbols-outlined table__footer--page-more-icon"
+              >
                 expand_more
               </span>
               <span class="material-symbols-outlined table__footer--icon-1">
@@ -142,9 +143,64 @@
           </div>
         </div>
       </main>
+    </div>
 
     <!-- modal -->
-      
-  </div>
+    <div id="add-modal" class="add-modal">
+      <div class="add-modal-container">
+        <h3>Thông tin khách hàng</h3>
+        <div class="form-container">
+          <div class="form">
+            <div class="form-content">
+              <span class="form-text-1">Đăng ký tài khoản</span>
+              <label class="tf form-tf-1"
+                >Họ và tên
+                <input
+                  class="form-tf-1-inp"
+                  type="text"
+                  placeholder="Họ tên đầy đủ"
+                />
+              </label>
+
+              <label class="form-tf-2"
+                >Giới tính
+                <div class="form-tf-2-cb">
+                  <input class="form-tf-2-inp" type="radio" value="Nam" />
+                  <span class="form-tf-2-text">Nam</span>
+                </div>
+                <div class="form-tf-2-cb">
+                  <input class="form-tf-2-inp" type="radio" value="Nữ" />
+                  <span class="form-tf-2-text">Nữ</span>
+                </div>
+              </label>
+
+              <label class="tf form-tf-3"
+                >Ngày sinh
+                <input
+                  class="form-tf-3-inp"
+                  type="text"
+                  placeholder="dd/mm/yyyy"
+                />
+                <span class="material-symbols-outlined form-icon"></span>
+              </label>
+
+              <label class="tf form-tf-4"
+                >Địa chỉ email
+                <input
+                  class="form-tf-4-inp"
+                  type="text"
+                  placeholder="example@email.com"
+                />
+              </label>
+
+              <div class="form-btn">
+                <button class="dialog-second-btn">Hủy</button>
+                <button class="dialog-primary-btn">Đăng ký</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
