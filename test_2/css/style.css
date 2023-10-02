@@ -89,19 +89,20 @@ asdie {
 
 aside div {
   height: 100%;
-  background-color: #204918;
-  padding: 2rem;
+  background-color: #407136;
+  padding: 1rem;
   border-radius: 3px;
   font-size: 2rem;
 }
 
 asdie,
 a {
-  padding: 0.5rem 0.5rem;
+  padding: 1rem 1rem;
   gap: 1rem;
   display: flex;
   font-size: 1.1rem;
   color: white;
+  margin-bottom: 0.3rem;
 }
 
 main {
@@ -135,7 +136,7 @@ tr {
   border: 1px solid #f2f2f2;
 }
 
-tr:hover{
+tr:hover {
   background-color: #00843e;
 }
 
@@ -165,6 +166,7 @@ thead {
   border-radius: 3px;
   font-weight: 500;
   margin-left: 1rem;
+  cursor: pointer;
 }
 
 .table__nav--delete-all .icon {
@@ -346,4 +348,14 @@ thead {
   color: red;
   display: block;
   cursor: pointer;
+}
+
+.aside-bottom {
+  /* position: absolute;
+  bottom: 1rem; */
+}
+
+aside a:hover {
+  background-color: #50b83c;
+  border-radius: 4px;
 }
