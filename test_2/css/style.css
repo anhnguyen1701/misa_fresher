@@ -137,7 +137,7 @@ tr {
 }
 
 tr:hover {
-  background-color: #00843e;
+  background-color: #f0fdee;
 }
 
 thead {
@@ -358,4 +358,26 @@ thead {
 aside a:hover {
   background-color: #50b83c;
   border-radius: 4px;
+}
+
+.table__tooltip {
+  display: none;
+}
+
+.table__tooltip span {
+  color: #7e7e7e;
+}
+
+.table__tooltip--icon1 {
+  background-color: white;
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.table__tooltip--icon2 {
+  background-color: white;
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
 }
