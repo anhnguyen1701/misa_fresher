@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  /* margin: auto; */
+}
+
+.combobox {
+  display: flex;
+  flex-direction: column;
+}
+
+.combobox__input-field {
+  width: 200px;
+  height: 36px;
+  border: 1px solid #50b83c;
+  display: flex;
+  border-radius: 3px;
+}
+
+.combobox__input {
+  height: 100%;
+  outline: none;
+  border: 0;
+  background: transparent;
+  padding: 12px 8px;
+  width: calc(100% - 36px);
+}
+
+.combobox__btn {
+  height: 100%;
+  width: 36px;
+  border: none;
+  border-left: 1px solid #e6e6e6;
+  background-color: white;
+  background: transparent;
+}
+
+.combobox__btn span {
+  line-height: 36px;
+  color: #676767;
+}
