@@ -1,18 +1,18 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <Homepage />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import Homepage from './views/Homepage.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Homepage,
   },
 };
 </script>
 
 <style>
-@import url('./css/style.css');
+@import url('./assets/css/style.css');
 </style>

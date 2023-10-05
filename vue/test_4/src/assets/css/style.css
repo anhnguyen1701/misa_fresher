@@ -53,7 +53,7 @@ header {
   flex: 1;
   width: 20rem;
   height: 5rem;
-  background-image: url(../assets/cukcuk-logo.png);
+  background-image: url(../img/cukcuk-logo.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -70,7 +70,7 @@ header {
 .header__avatar {
   width: 3rem;
   height: 3rem;
-  background-image: url(../assets/carrot.png);
+  background-image: url(../img/carrot.png);
   background-size: contain;
   border-radius: 50%;
 }
