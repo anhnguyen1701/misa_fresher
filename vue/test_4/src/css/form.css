@@ -1,0 +1,109 @@
+.form-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.form {
+  margin: 10px;
+  width: 324px;
+  height: 528px;
+}
+
+.form-content {
+  padding: 30px 32px;
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.form-text-1 {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tf {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 22px;
+}
+
+.form-tf-1-inp {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  width: 260px;
+  height: 36px;
+  margin-top: 8px;
+  margin-bottom: 22px;
+}
+
+.form-tf-1-inp::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 12px 9px;
+  color: #9e9e9e;
+}
+
+.form-tf-2 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 22px;
+}
+
+.form-tf-2-cb {
+  margin-top: 8px;
+}
+
+.form-tf-2-text {
+  margin-left: 5px;
+  font-weight: 400;
+}
+
+.form-tf-3-inp {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  width: 260px;
+  height: 36px;
+  margin-top: 8px;
+}
+
+.form-tf-3-inp::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 12px 9px;
+  color: #9e9e9e;
+}
+
+.form-tf-4-inp {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  width: 260px;
+  height: 36px;
+  margin-top: 8px;
+}
+
+.form-tf-4-inp::placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 12px 9px;
+  color: #9e9e9e;
+}
+
+.form-btn {
+  margin-top: 32px;
+  display: flex;
+  justify-content: end;
+}
+
+.form-tf-3 {
+  position: relative;
+}
+
+.form-icon::after {
+  content: '\e935';
+  position: absolute;
+  top: 30px;
+  left: 230px;
+}

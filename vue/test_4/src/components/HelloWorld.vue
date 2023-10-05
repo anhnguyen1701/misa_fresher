@@ -1,58 +1,553 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header__left">
+          <div class="header__sidebar">
+            <span class="material-symbols-outlined"> apps </span>
+          </div>
+          <div class="header__logo"></div>
+        </div>
+        <div class="header__right">
+          <div class="header__account">
+            <div class="header__avatar"></div>
+            <div class="header__username">Nguyễn Lâm Anh</div>
+            <div class="header__option">
+              <span class="material-symbols-outlined"> more_horiz </span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <aside>
+        <div>
+          <a href="#">
+            <span class="material-symbols-outlined"> analytics </span>
+            <h3>Trang chủ</h3>
+          </a>
+          <a href="#">
+            <span class="material-symbols-outlined"> show_chart </span>
+            <h3>Báo cáo</h3>
+          </a>
+          <a href="#">
+            <span class="material-symbols-outlined"> groups </span>
+            <h3>Khách hàng</h3>
+          </a>
+          <a href="#">
+            <span class="material-symbols-outlined"> groups </span>
+            <h3>Nhân viên</h3>
+          </a>
+          <a href="#">
+            <span class="material-symbols-outlined"> settings </span>
+            <h3>Cài đặt</h3>
+          </a>
+          <a href="#" class="aside-bottom">
+            <span class="material-symbols-outlined"> chevron_left </span>
+            <h3>Thu gọn</h3>
+          </a>
+        </div>
+      </aside>
+
+      <main>
+        <div class="main__header">
+          <h2>Trang chủ</h2>
+        </div>
+
+        <div class="main__table">
+          <div class="table__nav">
+            <div>
+              <span class="table__nav--select"
+                >Đã chọn <strong>1005</strong></span
+              >
+              <span class="table__nav--cancel-select">Bỏ chọn</span>
+              <button class="table__nav--delete-all">
+                <span class="material-symbols-outlined icon"> delete </span>
+                <span>Xóa tất cả</span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="table__nav-add"
+                onclick="document.getElementById('add-modal').style.display='block'"
+              >
+                <span class="material-symbols-outlined icon"> add </span>
+                <span class="text">Thêm mới</span>
+              </button>
+            </div>
+          </div>
+          <div class="table__main">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" /></th>
+                  <th>Mã nhân viên</th>
+                  <th>Họ tên</th>
+                  <th>Giới tính</th>
+                  <th>Ngày sinh</th>
+                  <th>Số tiền nợ</th>
+                  <th>Địa chỉ</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                  <td class="table__tooltip">
+                    <button class="table__tooltip--icon1">
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="table__tooltip--icon2">
+                      <span class="material-symbols-outlined">
+                        more_horiz
+                      </span>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>NVCC</td>
+                  <td>abcdf</td>
+                  <td>Nam</td>
+                  <td>17/01/2000</td>
+                  <td>12,333,444</td>
+                  <td>Ha noi</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table__footer">
+            <div class="table__footer--left">
+              <span>Tổng: <strong>100</strong></span>
+            </div>
+            <div class="table__footer--right">
+              <span>Số bản ghi/trang</span>
+              <span class="table__footer--page-number">10</span>
+              <span
+                class="material-symbols-outlined table__footer--page-more-icon"
+              >
+                expand_more
+              </span>
+              <span class="material-symbols-outlined table__footer--icon-1">
+                arrow_back_ios
+              </span>
+              <span class="material-symbols-outlined table__footer--icon-2">
+                arrow_forward_ios
+              </span>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- modal -->
+    <div id="add-modal" class="add-modal">
+      <div class="add-modal-container">
+        <div class="row0">
+          <h3>Thông tin khách hàng</h3>
+          <span
+            onclick="document.getElementById('add-modal').style.display='none'"
+            class="icon material-symbols-outlined"
+          >
+            close
+          </span>
+        </div>
+        <div class="row1">
+          <label class="add-modal-makh modal-lb">
+            <span> Mã khách hàng <span style="color: red">*</span> </span>
+            <input type="text" class="modal-inp" />
+          </label>
+          <label class="add-modal-makh modal-lb">
+            Họ và tên
+            <input type="text" class="modal-inp" />
+          </label>
+          <label class="add-modal-makh modal-lb">
+            Ngày sinh
+            <input type="date" class="modal-inp" placeholder="mm/dd/yyyy" />
+          </label>
+          <div class="add-modal-gioitinh modal-lb-exc">
+            <div class="modal-radio-text">
+              <span>Giơi tính</span>
+            </div>
+            <div class="modal-radio">
+              <input
+                type="radio"
+                name="gioitinh"
+                value="Nam"
+                class="modal-radio"
+              />
+              <label>Nam</label>
+              <input
+                type="radio"
+                name="gioitinh"
+                value="Nữ"
+                class="modal-radio"
+              />
+              <label>Nữ</label>
+              <input
+                type="radio"
+                name="gioitinh"
+                value="Khác"
+                class="modal-radio"
+              />
+              <label>Khác</label>
+            </div>
+          </div>
+        </div>
+        <div class="row2">
+          <label class="add-modal-sdt modal-lb">
+            Số điện thoại
+            <input type="text" class="modal-inp" />
+          </label>
+          <label class="add-modal-makh modal-lb">
+            Số CMTND
+            <input type="text" class="modal-inp" />
+          </label>
+          <label class="add-modal-makh modal-lb">
+            Ngày cấp
+            <input type="date" class="modal-inp" placeholder="dd/mm/yyyy" />
+          </label>
+        </div>
+
+        <div class="row3">
+          <label class="add-modal-email modal-lb">
+            Email
+            <input type="text" class="modal-inp" />
+          </label>
+          <label class="add-modal-noicap modal-lb">
+            Nơi cấp
+            <input type="text" class="modal-inp" />
+          </label>
+        </div>
+
+        <div class="row4">
+          <label class="add-modal-sotienno modal-lb">
+            Số tiền nợ
+            <input type="text" class="modal-inp" />
+          </label>
+        </div>
+
+        <div class="row5">
+          <label class="add-modal-congty modal-lb">
+            Công ty
+            <input type="text" class="modal-inp" />
+          </label>
+        </div>
+
+        <div class="row6">
+          <label class="add-modal-diachi modal-lb">
+            Địa chỉ
+            <input type="text" class="modal-inp" />
+          </label>
+        </div>
+        <div class="row7">
+          <button
+            class="btn-huy btn"
+            onclick="document.getElementById('add-modal').style.display='none'"
+          >
+            Hủy
+          </button>
+          <button class="btn-cat btn">Cất</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
-  }
-}
+    msg: String,
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+@import url(../css/style.css);
 </style>
