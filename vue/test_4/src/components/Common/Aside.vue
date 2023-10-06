@@ -33,6 +33,9 @@
 /* eslint-disable */
 export default {
   name: 'Aside',
+  data(){
+    
+  }
 };
 </script>
 <style lang=""></style>
