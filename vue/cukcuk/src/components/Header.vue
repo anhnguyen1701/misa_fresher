@@ -86,4 +86,8 @@ header {
   height: 24px;
   width: 24px;
 }
+
+.name {
+  font-weight: 600;
+}
 </style>
