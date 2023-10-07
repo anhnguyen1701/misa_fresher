@@ -24,7 +24,7 @@ export default {
 <style>
 :root {
   --sidebar: #021434;
-  --sidebar-hover: #021434;
+  --sidebar-hover: #4d6695;
   --gray-1: #edeff1;
   --gray-2: #f4f4f4;
   --gray-3: #888888;

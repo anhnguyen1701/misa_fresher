@@ -1,6 +1,29 @@
 <template>
   <aside>
-    <h1>sidebar</h1>
+    <router-link to="/" class="link">
+      <div class="logo home"></div>
+      <span class="text">Trang chủ</span>
+    </router-link>
+    <router-link to="/report" class="link">
+      <div class="logo report"></div>
+      <span class="text">Báo cáo</span>
+    </router-link>
+    <router-link to="/customer" class="link">
+      <div class="logo customer"></div>
+      <span class="text">Khách hàng</span>
+    </router-link>
+    <router-link to="/employee" class="link">
+      <div class="logo employee"></div>
+      <span class="text">Nhân viên</span>
+    </router-link>
+    <router-link to="/setting" class="link">
+      <div class="logo setting"></div>
+      <span class="text">Cài đặt</span>
+    </router-link>
+    <div class="collapse-div link">
+      <div class="logo collapse"></div>
+      <span class="text">Thu gọn</span>
+    </div>
   </aside>
 </template>
 
@@ -11,9 +34,95 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 aside {
-  background-color: orange;
+  background-color: var(--sidebar);
   width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  height: 44px;
+  width: 176px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.link:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.link:first-child {
+  margin-top: 20px;
+}
+
+.logo {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  color: white;
+  margin: 10px 12px;
+}
+
+.collapse-div {
+  position: absolute;
+  bottom: 10px;
+}
+
+.collapse-div::before {
+  content: '';
+  width: 200px;
+  height: 1px;
+  background-color: #213553;
+  position: absolute;
+  top: -15px;
+  left: -12px;
+}
+
+.home,
+.report,
+.customer,
+.employee,
+.setting,
+.collapse {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(172deg)
+    brightness(107%) contrast(102%);
+}
+
+.home {
+  background-image: url('../assets/icon/dashboard.png');
+}
+
+.report {
+  background-image: url('../assets/icon/report.png');
+}
+
+.customer {
+  background-image: url('../assets/icon/dic-employee.png');
+}
+
+.employee {
+  background-image: url('../assets/icon/dic-employee.png');
+}
+
+.setting {
+  background-image: url('../assets/icon/setting.png');
+}
+
+.collapse {
+  background-image: url('../assets/icon/btn-prev-page.svg');
 }
 </style>
