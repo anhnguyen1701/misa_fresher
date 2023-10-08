@@ -39,6 +39,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
+  overflow: unset;
 }
 
 html {
@@ -48,6 +49,7 @@ html {
 body {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .container {
@@ -59,7 +61,7 @@ body {
   display: flex;
   flex-direction: row;
   height: calc(100vh - 56px);
-  width: 100%;
+  width: 100vw;
 }
 
 button {
