@@ -1,5 +1,5 @@
 <template>
-  <aside>
+  <aside v-if="isAsideOpen">
     <router-link to="/" class="link">
       <div class="logo home"></div>
       <span class="text">Trang chủ</span>
@@ -20,9 +20,29 @@
       <div class="logo setting"></div>
       <span class="text">Cài đặt</span>
     </router-link>
-    <div class="collapse-div link">
+    <div class="collapse-div link" @click="collapseAside">
       <div class="logo collapse"></div>
       <span class="text">Thu gọn</span>
+    </div>
+  </aside>
+  <aside class="aside-2" v-else>
+    <router-link to="/" class="link">
+      <div class="logo home"></div>
+    </router-link>
+    <router-link to="/report" class="link">
+      <div class="logo report"></div>
+    </router-link>
+    <router-link to="/customer" class="link">
+      <div class="logo customer"></div>
+    </router-link>
+    <router-link to="/employee" class="link">
+      <div class="logo employee"></div>
+    </router-link>
+    <router-link to="/setting" class="link">
+      <div class="logo setting"></div>
+    </router-link>
+    <div class="collapse-div link" @click="collapseAside">
+      <div class="logo collapse"></div>
     </div>
   </aside>
 </template>
@@ -31,6 +51,16 @@
 /* eslint-disable */
 export default {
   name: 'Sidebar',
+  methods: {
+    collapseAside() {
+      this.isAsideOpen = !this.isAsideOpen;
+    },
+  },
+  data() {
+    return {
+      isAsideOpen: true,
+    };
+  },
 };
 </script>
 

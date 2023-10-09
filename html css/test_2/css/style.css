@@ -361,7 +361,7 @@ aside a:hover {
 }
 
 .table__tooltip {
-  display: none;
+  /* display: none; */
 }
 
 .table__tooltip span {

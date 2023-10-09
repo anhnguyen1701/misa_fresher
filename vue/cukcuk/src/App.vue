@@ -71,4 +71,16 @@ button {
   outline: none;
   background: none;
 }
+
+.txt-center {
+  text-align: center;
+}
+
+.txt-left {
+  text-align: left;
+}
+
+.txt-right {
+  text-align: right;
+}
 </style>

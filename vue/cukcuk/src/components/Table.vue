@@ -11,7 +11,7 @@
         </button>
       </div>
       <div class="right">
-        <button class="btn-add">
+        <button class="btn-add" @click="showModal">
           <span class="icon"></span>
           <span> Thêm mới </span>
         </button>
@@ -21,32 +21,40 @@
       <table>
         <thead>
           <tr>
-            <th><input type="checkbox" class="checkbox" /></th>
-            <th>Mã nhân viên</th>
-            <th>Họ tên</th>
-            <th>Giới tính</th>
-            <th>Ngày sinh</th>
-            <th>Số tiền nợ</th>
-            <th>Địa chỉ</th>
-            <th></th>
+            <th class="txt-center" style="width: 60px">
+              <input type="checkbox" class="checkbox" />
+            </th>
+            <th class="txt-left">Mã nhân viên</th>
+            <th class="txt-left">Họ tên</th>
+            <th class="txt-left">Giới tính</th>
+            <th class="txt-center">Ngày sinh</th>
+            <th class="txt-left">Địa chỉ</th>
+            <th class="txt-right">Số tiền nợ</th>
+            <th class="txt-center" style="width: 100px"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in items" v-bind:key="item.id">
-            <td><input type="checkbox" class="checkbox" /></td>
-            <td>{{ item.id }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.gender }}</td>
-            <td>{{ item.dob }}</td>
-            <td>{{ item.balance }}</td>
-            <td>{{ item.address }}</td>
-            <td class="table__tooltip">
-              <button class="table__tooltip--icon1">
-                <span class="material-symbols-outlined"> edit </span>
-              </button>
-              <button class="table__tooltip--icon2">
-                <span class="material-symbols-outlined"> more_horiz </span>
-              </button>
+          <tr v-for="item in items" v-bind:key="item.CustomerId">
+            <td class="txt-center">
+              <input type="checkbox" class="checkbox" />
+            </td>
+            <td class="txt-left">{{ item.MemberCardCode }}</td>
+            <td class="txt-left">{{ item.FullName }}</td>
+            <td class="txt-left">{{ convertGender(item.Gender) }}</td>
+            <td class="txt-center">{{ convertDOB(item.DateOfBirth) }}</td>
+            <td class="txt-left">{{ item.Address }}</td>
+            <td class="txt-right">
+              {{ convertDebitAmount(item.DebitAmount) }}
+            </td>
+            <td class="txt-center">
+              <div class="table__tooltip">
+                <button class="table__tooltip--icon1">
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="table__tooltip--icon2">
+                  <span class="material-symbols-outlined"> more_horiz </span>
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -68,242 +76,62 @@
         </span>
       </div>
     </div>
+
+    <Modal v-show="isModalVisible" @closeFromTable="closeModal"></Modal>
   </div>
 </template>
 
 <script>
+import Modal from '../components/Modal.vue';
+
 /* eslint-disable */
 export default {
   name: 'Table',
   data() {
     return {
-      items: [
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-        {
-          id: 'nvcc',
-          name: 'nvcc',
-          gender: 'nam',
-          dob: '11/91/200',
-          balance: '1,000,000',
-          address: 'Ha noi',
-        },
-      ],
+      items: [],
+      isModalVisible: false,
     };
+  },
+  methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    convertGender(x) {
+      if (x == 0) return 'Nữ';
+      else return 'Nam';
+    },
+    convertDOB(dob) {
+      let date = new Date(dob);
+      let d = date.getDate();
+      let m = date.getMonth() + 1;
+      let y = date.getFullYear();
+
+      d = d < 10 ? `0${d}` : d;
+      m = m < 10 ? `0${m}` : m;
+      let res = `${d}/${m}/${y}`;
+      return res;
+    },
+    convertDebitAmount(inp) {
+      let res = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+      }).format(inp);
+      return res;
+    },
+  },
+  components: {
+    Modal,
+  },
+  mounted() {
+    fetch('https://cukcuk.manhnv.net/api/v1/customers')
+      .then((res) => res.json())
+      .then((data) => {
+        this.items = data;
+      });
   },
 };
 </script>
@@ -315,6 +143,7 @@ export default {
   height: 92%;
   padding: 10px;
   margin-top: 16px;
+  border-radius: 3px;
 }
 
 .table .header {
@@ -401,7 +230,7 @@ thead {
 
 th,
 td {
-  text-align: center;
+  /* text-align: center; */
   height: 48px;
 }
 
@@ -412,7 +241,7 @@ tr:hover {
 .main {
   margin-top: 12px;
   /* min-height: 100px; */
-  max-height: 72vh;
+  max-height: 66vh;
   overflow-y: scroll;
   border: 1px solid var(--gray-2);
   border-radius: 3px;
@@ -449,5 +278,13 @@ tr:hover {
 .checkbox {
   width: 24px;
   height: 24px;
+}
+
+.table__tooltip{
+  visibility: hidden;
+}
+
+tr:hover .table__tooltip{
+  visibility: visible;
 }
 </style>
