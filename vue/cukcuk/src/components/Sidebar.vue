@@ -78,7 +78,7 @@ aside {
 
 .aside-2 {
   background-color: var(--sidebar);
-  width: 50px;
+  width: 60px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
