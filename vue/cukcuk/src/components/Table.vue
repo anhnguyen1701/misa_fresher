@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    <Modal v-show="isModalVisible" @closeFromTable="closeModal"></Modal>
+    <Modal v-if="isModalVisible" @closeFromTable="closeModal"></Modal>
   </div>
 </template>
 
