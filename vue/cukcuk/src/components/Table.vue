@@ -11,7 +11,7 @@
         </button>
       </div>
       <div class="right">
-        <button class="btn-add" @click="showModal">
+        <button class="btn-add" @click="showModal('add')">
           <span class="icon"></span>
           <span> Thêm mới </span>
         </button>
@@ -28,8 +28,12 @@
             <th class="txt-left">Họ tên</th>
             <th class="txt-left">Giới tính</th>
             <th class="txt-center">Ngày sinh</th>
-            <th class="txt-left">Địa chỉ</th>
-            <th class="txt-right">Số tiền nợ</th>
+            <th class="txt-left">Điện thoại</th>
+            <th class="txt-left">Email</th>
+            <th class="txt-left">Chức vụ</th>
+            <th class="txt-left">Phòng ban</th>
+            <th class="txt-left">Mức lương cơ bản</th>
+            <th class="txt-left">Tình trạng công việc</th>
             <th class="txt-center" style="width: 100px"></th>
           </tr>
         </thead>
@@ -38,17 +42,25 @@
             <td class="txt-center">
               <input type="checkbox" class="checkbox" />
             </td>
-            <td class="txt-left">{{ item.MemberCardCode }}</td>
+            <td class="txt-left">{{ item.EmployeeCode }}</td>
             <td class="txt-left">{{ item.FullName }}</td>
-            <td class="txt-left">{{ convertGender(item.Gender) }}</td>
+            <td class="txt-left">{{ item.GenderName }}</td>
             <td class="txt-center">{{ convertDOB(item.DateOfBirth) }}</td>
-            <td class="txt-left">{{ item.Address }}</td>
+            <td class="txt-left">{{ item.PhoneNumber }}</td>
+            <td class="txt-left">{{ item.Email }}</td>
+            <td class="txt-left">{{ item.PositionName }}</td>
+            <td class="txt-left">{{ item.DepartmentName }}</td>
+            <td class="txt-left">{{ convertWorkStatus(item.WorkStatus) }}</td>
             <td class="txt-right">
-              {{ convertDebitAmount(item.DebitAmount) }}
+              {{ convertDebitAmount(item.Salary) }}
             </td>
+
             <td class="txt-center">
               <div class="table__tooltip">
-                <button class="table__tooltip--icon1">
+                <button
+                  class="table__tooltip--icon1"
+                  @click="showModal('edit', item)"
+                >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="table__tooltip--icon2">
@@ -77,7 +89,12 @@
       </div>
     </div>
 
-    <Modal v-if="isModalVisible" @closeFromTable="closeModal"></Modal>
+    <Modal
+      v-if="isModalVisible"
+      @closeFromTable="closeModal"
+      :action="modalAction"
+      :item="modalItem"
+    ></Modal>
   </div>
 </template>
 
@@ -91,10 +108,21 @@ export default {
     return {
       items: [],
       isModalVisible: false,
+      modalAction: '',
+      modalItem: {},
     };
   },
   methods: {
-    showModal() {
+    showModal(action, item) {
+      if (action == 'edit') {
+        this.modalAction = action;
+        this.modalItem = item;
+      }
+
+      if (action == 'add') {
+        this.modalItem = {};
+      }
+
       this.isModalVisible = true;
     },
     closeModal() {
@@ -103,6 +131,11 @@ export default {
     convertGender(x) {
       if (x == 0) return 'Nữ';
       else return 'Nam';
+    },
+    convertWorkStatus(x) {
+      if (x == 0) return 'Đã nghỉ việc';
+      else if (x == 1) return 'Đang thử việc';
+      else return 'Đang làm việc';
     },
     convertDOB(dob) {
       let date = new Date(dob);
@@ -116,7 +149,7 @@ export default {
       return res;
     },
     convertDebitAmount(inp) {
-      let res = new Intl.NumberFormat('vi-VN', {
+      let res = new Intl.NumberFormat('it-IT', {
         style: 'currency',
         currency: 'VND',
       }).format(inp);
@@ -127,9 +160,10 @@ export default {
     Modal,
   },
   mounted() {
-    fetch('https://cukcuk.manhnv.net/api/v1/customers')
+    fetch('https://cukcuk.manhnv.net/api/v1/employees')
       .then((res) => res.json())
       .then((data) => {
+        console.log(data[0]);
         this.items = data;
       });
   },
@@ -280,11 +314,11 @@ tr:hover {
   height: 24px;
 }
 
-.table__tooltip{
+.table__tooltip {
   visibility: hidden;
 }
 
-tr:hover .table__tooltip{
+tr:hover .table__tooltip {
   visibility: visible;
 }
 </style>
