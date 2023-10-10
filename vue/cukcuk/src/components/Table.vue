@@ -3,7 +3,9 @@
     <div class="header">
       <div class="left">
         <span class="header--selected">Đã chọn</span>
-        <span class="header--selected--count">1005</span>
+        <span class="header--selected--count">{{
+          this.checkedItems.length
+        }}</span>
         <span class="header--cancel--selected">Bỏ chọn</span>
         <button class="btn-delete" @click="deleteEmployee">
           <span class="material-symbols-outlined icon"> delete </span>
@@ -120,8 +122,8 @@ export default {
   },
   methods: {
     showModal(action, item) {
+      this.modalAction = action;
       if (action == 'edit') {
-        this.modalAction = action;
         this.modalItem = item;
       }
 

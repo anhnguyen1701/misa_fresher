@@ -103,7 +103,20 @@
       </div>
       <div class="row7">
         <button class="btn-huy btn" @click="close">Hủy</button>
-        <button class="btn-cat btn" @click="submitForm">Cất</button>
+        <button
+          v-if="this.action == 'add'"
+          class="btn-cat btn"
+          @click="addEmployee"
+        >
+          Thêm
+        </button>
+        <button
+          v-if="this.action == 'edit'"
+          class="btn-cat btn"
+          @click="editEmployee"
+        >
+          Sửa
+        </button>
       </div>
     </div>
   </div>
@@ -144,7 +157,7 @@ export default {
       }).format(inp);
       return res;
     },
-    submitForm() {
+    addEmployee() {
       console.log(this.data);
       fetch('https://cukcuk.manhnv.net/api/v1/Employees', {
         method: 'POST',
@@ -165,6 +178,24 @@ export default {
           console.error(e);
         });
     },
+    async editEmployee() {
+      try {
+        const res = await fetch(
+          `https://cukcuk.manhnv.net/api/v1/Employees/${this.data.EmployeeId}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.data),
+          }
+        );
+        if (res.status == 200) alert('sua thanh cong');
+        // window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   created() {
     this.data = this.item;
@@ -178,6 +209,8 @@ export default {
     if (iDate != null && iDate != '' && iDate.length > 0) {
       this.data.DateOfBirth = this.convertDOB(iDate);
     }
+
+    console.log(this.action);
   },
 };
 </script>
