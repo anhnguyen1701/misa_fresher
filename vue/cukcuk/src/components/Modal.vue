@@ -28,7 +28,7 @@
             <input
               type="radio"
               name="gioitinh"
-              value="Nam"
+              value="1"
               class="modal-radio"
               :checked="data.Gender == 1"
               v-model="data.Gender"
@@ -37,7 +37,7 @@
             <input
               type="radio"
               name="gioitinh"
-              value="Nữ"
+              value="0"
               :checked="data.Gender == 0"
               v-model="data.Gender"
               class="modal-radio"
@@ -46,7 +46,7 @@
             <input
               type="radio"
               name="gioitinh"
-              value="Khác"
+              value="2"
               :checked="data.Gender == 2"
               v-model="data.Gender"
               class="modal-radio"
@@ -103,7 +103,7 @@
       </div>
       <div class="row7">
         <button class="btn-huy btn" @click="close">Hủy</button>
-        <button class="btn-cat btn">Cất</button>
+        <button class="btn-cat btn" @click="submitForm">Cất</button>
       </div>
     </div>
   </div>
@@ -143,6 +143,26 @@ export default {
         currency: 'VND',
       }).format(inp);
       return res;
+    },
+    submitForm() {
+      console.log(this.data);
+      fetch('https://cukcuk.manhnv.net/api/v1/Employees', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          //thong bao
+          alert('them thanh cong');
+          console.log(data);
+        })
+        .catch((e) => {
+          throw e;
+          console.error(e);
+        });
     },
   },
   created() {

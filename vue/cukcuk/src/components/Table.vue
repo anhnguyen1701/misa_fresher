@@ -5,7 +5,7 @@
         <span class="header--selected">Đã chọn</span>
         <span class="header--selected--count">1005</span>
         <span class="header--cancel--selected">Bỏ chọn</span>
-        <button class="btn-delete">
+        <button class="btn-delete" @click="deleteEmployee">
           <span class="material-symbols-outlined icon"> delete </span>
           <span>Xóa tất cả</span>
         </button>
@@ -40,7 +40,11 @@
         <tbody>
           <tr v-for="item in items" v-bind:key="item.CustomerId">
             <td class="txt-center">
-              <input type="checkbox" class="checkbox" />
+              <input
+                type="checkbox"
+                class="checkbox"
+                @change="toggleItemCheck($event, item)"
+              />
             </td>
             <td class="txt-left">{{ item.EmployeeCode }}</td>
             <td class="txt-left">{{ item.FullName }}</td>
@@ -104,9 +108,11 @@ import Modal from '../components/Modal.vue';
 /* eslint-disable */
 export default {
   name: 'Table',
+  props: {},
   data() {
     return {
       items: [],
+      checkedItems: [],
       isModalVisible: false,
       modalAction: '',
       modalItem: {},
@@ -155,6 +161,42 @@ export default {
       }).format(inp);
       return res;
     },
+    toggleItemCheck(e, item) {
+      try {
+        if (e.target.checked) {
+          this.checkedItems.push(item.EmployeeId);
+        } else {
+          const i = this.checkedItems.indexOf(item.EmployeeId);
+          if (i > -1) {
+            this.checkedItems.splice(i, 1);
+          }
+        }
+        console.log(this.checkedItems);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteEmployee() {
+      try {
+        for (let id of this.checkedItems) {
+          await fetch(`https://cukcuk.manhnv.net/api/v1/Employees/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          this.items = this.items.filter((item) => item.EmployeeId != id);
+          this.checkedItems = this.checkedItems.filter(
+            (checkedId) => checkedId !== id
+          );
+        }
+
+        alert('xoa thanh cong');
+      } catch (e) {
+        throw e;
+        console.error(e);
+      }
+    },
   },
   components: {
     Modal,
@@ -163,10 +205,12 @@ export default {
     fetch('https://cukcuk.manhnv.net/api/v1/employees')
       .then((res) => res.json())
       .then((data) => {
-        console.log(data[0]);
+        // console.log(data[0]);
         this.items = data;
       });
   },
+
+  watch: {},
 };
 </script>
 

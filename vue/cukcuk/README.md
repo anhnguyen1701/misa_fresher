@@ -1,24 +1,6 @@
-# cukcuk
+# todo
+- **add**
+- validate khi nhap thong tin
+- update ds nhan vien khi them thanh cong
+- them thong bao thanh cong khi them nhan vien
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
