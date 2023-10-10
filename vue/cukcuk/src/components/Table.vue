@@ -179,24 +179,33 @@ export default {
       }
     },
     async deleteEmployee() {
-      try {
-        for (let id of this.checkedItems) {
-          await fetch(`https://cukcuk.manhnv.net/api/v1/Employees/${id}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          this.items = this.items.filter((item) => item.EmployeeId != id);
-          this.checkedItems = this.checkedItems.filter(
-            (checkedId) => checkedId !== id
-          );
+      if (this.checkedItems.length == 0) {
+        alert('Không có item nào được chọn!');
+      } else {
+        if (confirm('Bạn có chắc chắn muốn xóa không?')) {
+          try {
+            for (let id of this.checkedItems) {
+              await fetch(`https://cukcuk.manhnv.net/api/v1/Employees/${id}`, {
+                method: 'DELETE',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+              this.items = this.items.filter((item) => item.EmployeeId != id);
+              this.checkedItems = this.checkedItems.filter(
+                (checkedId) => checkedId !== id
+              );
+            }
+            alert('Xóa thành công');
+
+            // TODO: fix this
+            window.location.reload();
+          } catch (e) {
+            throw e;
+            console.error(e);
+          }
+        } else {
         }
-        alert('xoa thanh cong');
-        window.location.reload();
-      } catch (e) {
-        throw e;
-        console.error(e);
       }
     },
   },

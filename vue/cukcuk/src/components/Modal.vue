@@ -133,6 +133,7 @@ export default {
   data() {
     return {
       data: {},
+      originData: {},
     };
   },
   methods: {
@@ -158,42 +159,59 @@ export default {
       return res;
     },
     addEmployee() {
-      console.log(this.data);
-      fetch('https://cukcuk.manhnv.net/api/v1/Employees', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          //thong bao
-          alert('them thanh cong');
-          console.log(data);
-          window.location.reload();
-        })
-        .catch((e) => {
-          throw e;
-          console.error(e);
-        });
-    },
-    async editEmployee() {
-      try {
-        const res = await fetch(
-          `https://cukcuk.manhnv.net/api/v1/Employees/${this.data.EmployeeId}`,
-          {
-            method: 'PUT',
+      if (this.originData == JSON.stringify(this.data)) {
+        alert('Điền các trường để tiếp tục');
+      } else {
+        if (confirm('Bạn có chắc chắn muốn thêm không?')) {
+          console.log(this.data);
+          fetch('https://cukcuk.manhnv.net/api/v1/Employees', {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.data),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              //thong bao
+              alert('Thêm thành công');
+              console.log(data);
+
+              // TODO: fix this
+              window.location.reload();
+            })
+            .catch((e) => {
+              throw e;
+              console.error(e);
+            });
+        }
+      }
+    },
+    async editEmployee() {
+      if (this.originData == JSON.stringify(this.data)) {
+        alert('Không có thay đổi');
+      } else {
+        if (confirm('Bạn có chắc chắn thay đổi không?')) {
+          try {
+            const res = await fetch(
+              `https://cukcuk.manhnv.net/api/v1/Employees/${this.data.EmployeeId}`,
+              {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.data),
+              }
+            );
+            if (res.status == 200) alert('Sửa thành công');
+
+            // TODO: fix this
+            // window.location.reload();
+          } catch (error) {
+            console.log(error);
           }
-        );
-        if (res.status == 200) alert('sua thanh cong');
-        // window.location.reload();
-      } catch (error) {
-        console.log(error);
+        } else {
+        }
       }
     },
   },
@@ -209,6 +227,8 @@ export default {
     if (iDate != null && iDate != '' && iDate.length > 0) {
       this.data.DateOfBirth = this.convertDOB(iDate);
     }
+
+    this.originData = JSON.stringify(this.data);
 
     console.log(this.action);
   },
