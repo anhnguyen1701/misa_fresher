@@ -190,8 +190,8 @@ export default {
             (checkedId) => checkedId !== id
           );
         }
-
         alert('xoa thanh cong');
+        window.location.reload();
       } catch (e) {
         throw e;
         console.error(e);

@@ -158,6 +158,7 @@ export default {
           //thong bao
           alert('them thanh cong');
           console.log(data);
+          window.location.reload();
         })
         .catch((e) => {
           throw e;
