@@ -1,13 +1,20 @@
 <template>
   <main id="home">
     <h1>Home</h1>
+
+    <Dialog></Dialog>
   </main>
 </template>
 
 <script>
+import Dialog from '../components/Dialog.vue';
+
 /* eslint-disable */
 export default {
   name: 'Home',
+  components: {
+    Dialog,
+  },
 };
 </script>
 
