@@ -1,6 +1,5 @@
 <template>
   <div class="ex1">
-    <p>Child</p>
     <div class="combobox__input-field" style="align-items: center">
       <input class="ex2-span combobox__input" v-model="inputTxt" />
     </div>
@@ -10,17 +9,21 @@
 <script>
 /* eslint-disable */
 export default {
-  name: 'ChildC1',
-  props: { modelValue: String },
+  name: 'Child',
+  props: {
+    modelValue: String,
+  },
   data() {
-    return { inputTxt: '' };
+    return {
+      inputTxt: '',
+    };
   },
   watch: {
-    inputTxt(newVal, oldVal) {
-      this.$emit('update:modelValue', this.inputTxt);
-    },
     modelValue(newVal, oldVal) {
       this.inputTxt = newVal;
+    },
+    inputTxt(newVal, oldVal) {
+      this.$emit('update:modelValue', this.inputTxt);
     },
   },
 };
