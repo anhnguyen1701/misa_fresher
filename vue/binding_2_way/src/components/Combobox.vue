@@ -16,17 +16,29 @@
         </button>
       </div>
       <ul id="combobox_data" class="combobox__data" v-if="isShowList">
-        <li class="combobox__data-li-check" value="-1">
+        <li @click.self="updateInp($event, -1)" :class="getLiClass(-1)">
           <span class="combobox__data-li-text">- Chọn giá trị -</span>
-          <span class="material-symbols-outlined icon"> done </span>
+          <span
+            v-if="this.itemSelected == -1"
+            class="material-symbols-outlined icon"
+          >
+            done
+          </span>
         </li>
         <li
           v-for="item in this.list"
           :key="item[propValue]"
-          @click="updateInp($event)"
+          @click.self="updateInp($event, item[propValue])"
+          :class="getLiClass(item[propValue])"
         >
           <span class="combobox__data-li-text">
             {{ item[propText] }}
+          </span>
+          <span
+            v-if="this.itemSelected == item[propValue]"
+            class="material-symbols-outlined icon"
+          >
+            done
           </span>
         </li>
       </ul>
@@ -52,16 +64,24 @@ export default {
       inputTxt: '',
       isShowList: false,
       list: {},
+      itemSelected: -1,
     };
   },
   methods: {
     showList() {
       this.isShowList = !this.isShowList;
     },
-    updateInp(e) {
-      this.inputTxt = e.target.innerText;
+    updateInp(e, key) {
+      this.inputTxt = e.target.querySelector(
+        '.combobox__data-li-text'
+      ).textContent;
+      this.itemSelected = key;
     },
     onInput(e) {},
+    getLiClass(key) {
+      if (this.itemSelected === key) return 'combobox__data-li-check';
+      else return 'combobox__data-li-text';
+    },
   },
   created() {
     fetch(this.url)
@@ -155,9 +175,10 @@ export default {
 }
 
 .combobox__data-li-check {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   color: #50b83c;
   justify-content: space-between;
+  /* flex: none; */
 }
 </style>
