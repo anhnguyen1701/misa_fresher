@@ -56,10 +56,10 @@
             <td class="txt-left">{{ item.Email }}</td>
             <td class="txt-left">{{ item.PositionName }}</td>
             <td class="txt-left">{{ item.DepartmentName }}</td>
-            <td class="txt-left">{{ convertWorkStatus(item.WorkStatus) }}</td>
             <td class="txt-right">
               {{ convertDebitAmount(item.Salary) }}
             </td>
+            <td class="txt-left">{{ convertWorkStatus(item.WorkStatus) }}</td>
 
             <td class="txt-center">
               <div class="table__tooltip">
@@ -185,7 +185,7 @@ export default {
         if (confirm('Bạn có chắc chắn muốn xóa không?')) {
           try {
             for (let id of this.checkedItems) {
-              await fetch(`https://cukcuk.manhnv.net/api/v1/Employees/${id}`, {
+              await fetch(`${process.env.ENDPOINT}/Employees/${id}`, {
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
@@ -213,12 +213,18 @@ export default {
     Modal,
   },
   mounted() {
-    fetch('https://cukcuk.manhnv.net/api/v1/employees')
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data[0]);
-        this.items = data;
-      });
+    try {
+      console.log(process.env.ENDPOINT);
+      fetch(`${process.env.ENDPOINT}/employees`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          // console.log(data[0]);
+          this.items = data;
+        });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   watch: {},
