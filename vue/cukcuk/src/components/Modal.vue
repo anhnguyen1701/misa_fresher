@@ -119,10 +119,22 @@
         </button>
       </div>
     </div>
+    <Dialog
+      v-if="isShowDiaglog"
+      :action="dialogAction"
+      :title="dialogTitle"
+      :description="dialogDesc"
+      :type="dialogType"
+      @closeDialog="closeDialog"
+      @add="addEmployeeDB"
+      @edit="editEmployeeDB"
+    ></Dialog>
   </div>
 </template>
 
 <script>
+import Dialog from '../components/Dialog.vue';
+
 /* eslint-disable */
 export default {
   name: 'Modal',
@@ -130,15 +142,36 @@ export default {
     action: String,
     item: {},
   },
+  components: {
+    Dialog,
+  },
   data() {
     return {
       data: {},
       originData: {},
+
+      dialogTitle: '',
+      dialogAction: '',
+      dialogDesc: '',
+      dialogType: '',
+      isShowDiaglog: false,
+      isDialogConfirm: false,
     };
   },
   methods: {
     close() {
       this.$emit('closeFromTable');
+    },
+    closeDialog() {
+      this.isShowDiaglog = false;
+    },
+    showDialog(action, title, desc, type) {
+      console.log(action, title, desc, type);
+      this.dialogAction = action;
+      this.dialogTitle = title;
+      this.dialogDesc = desc;
+      this.dialogType = type;
+      this.isShowDiaglog = true;
     },
     convertDOB(dob) {
       let date = new Date(dob);
@@ -160,58 +193,69 @@ export default {
     },
     addEmployee() {
       if (this.originData == JSON.stringify(this.data)) {
-        alert('Điền các trường để tiếp tục');
+        this.showDialog('0', 'Thông báo', 'Điền các trường để tiếp tục', 1);
       } else {
-        if (confirm('Bạn có chắc chắn muốn thêm không?')) {
-          console.log(this.data);
-          fetch('https://cukcuk.manhnv.net/api/v1/Employees', {
-            method: 'POST',
+        this.showDialog(
+          'add',
+          'Thông báo',
+          'Bạn có chắc chắn muốn thêm không',
+          2
+        );
+      }
+    },
+    addEmployeeDB() {
+      fetch(`${process.env.ENDPOINT}/employees`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          //thong bao
+          this.showDialog('0', 'Thông báo', 'Thêm thành công', 1);
+          // TODO: fix this
+          // window.location.reload();
+        })
+        .catch((e) => {
+          throw e;
+          console.error(e);
+        });
+    },
+    async editEmployee() {
+      if (this.originData == JSON.stringify(this.data)) {
+        this.showDialog('0', 'Thông báo', 'Không có thay đổi', 1);
+      } else {
+        this.showDialog(
+          'edit',
+          'Thông báo',
+          'Bạn có chắc chắn thay đổi không?',
+          2
+        );
+      }
+    },
+    async editEmployeeDB() {
+      this.showDialog('0', 'Thông báo', 'Sửa thành công', 1);
+
+      try {
+        const res = await fetch(
+          `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
+          {
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.data),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              //thong bao
-              alert('Thêm thành công');
-              console.log(data);
-
-              // TODO: fix this
-              window.location.reload();
-            })
-            .catch((e) => {
-              throw e;
-              console.error(e);
-            });
-        }
-      }
-    },
-    async editEmployee() {
-      if (this.originData == JSON.stringify(this.data)) {
-        alert('Không có thay đổi');
-      } else {
-        if (confirm('Bạn có chắc chắn thay đổi không?')) {
-          try {
-            const res = await fetch(
-              `https://cukcuk.manhnv.net/api/v1/Employees/${this.data.EmployeeId}`,
-              {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.data),
-              }
-            );
-            if (res.status == 200) alert('Sửa thành công');
-
-            // TODO: fix this
-            // window.location.reload();
-          } catch (error) {
-            console.log(error);
           }
-        } else {
-        }
+        );
+        if (res.status == 200)
+          this.showDialog('0', 'Thông báo', 'Sửa thành công', 1);
+
+        // TODO: fix this
+        // window.location.reload();
+      } catch (error) {
+        console.log(error);
       }
     },
   },

@@ -18,6 +18,7 @@
 export default {
   name: 'Dialog',
   props: {
+    action: String,
     title: String,
     description: String,
     type: String, // 1 = alert, 2= confrim
@@ -30,18 +31,29 @@ export default {
   methods: {
     handleResult(res) {
       if (res == 'true') {
-        this.changeStateDialog(true);
+        if (this.action == 'delete') {
+          this.delete();
+        } else if (this.action == 'add') {
+          this.add();
+        } else if (this.action == 'edit') {
+          this.edit();
+        }
         this.closeDialog();
       } else {
-        this.changeStateDialog(false);
         this.closeDialog();
       }
     },
     closeDialog() {
       this.$emit('closeDialog');
     },
-    changeStateDialog(req) {
-      this.$emit('changeStateDialog', req);
+    delete() {
+      this.$emit('delete');
+    },
+    add() {
+      this.$emit('add');
+    },
+    edit() {
+      this.$emit('edit');
     },
   },
 };

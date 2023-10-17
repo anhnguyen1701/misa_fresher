@@ -103,11 +103,12 @@
     ></Modal>
     <Dialog
       v-if="isShowDiaglog"
+      :action="dialogAction"
       :title="dialogTitle"
       :description="dialogDesc"
       :type="dialogType"
       @closeDialog="closeDialog"
-      @changeStateDialog="changeStateDialog"
+      @delete="deleteEmployeeDB"
     ></Dialog>
   </div>
 </template>
@@ -129,6 +130,7 @@ export default {
       modalItem: {},
 
       dialogTitle: '',
+      dialogAction: '',
       dialogDesc: '',
       dialogType: '',
       isShowDiaglog: false,
@@ -148,7 +150,8 @@ export default {
 
       this.isModalVisible = true;
     },
-    async showDialog(title, desc, type) {
+    showDialog(action, title, desc, type) {
+      this.dialogAction = action;
       this.dialogTitle = title;
       this.dialogDesc = desc;
       this.dialogType = type;
@@ -214,33 +217,37 @@ export default {
     async deleteEmployee() {
       if (this.checkedItems.length == 0) {
         // alert('Không có item nào được chọn!');
-        this.showDialog('Thông báo', 'Không có item nào được chọn!', 1);
+        this.showDialog('0', 'Thông báo', 'Không có item nào được chọn!', 1);
       } else {
-        this.showDialog('Thông báo', 'Bạn có chắc chắn muốn xóa không?', 2);
-        if (confirm('Bạn có chắc chắn muốn xóa không?')) {
-          try {
-            for (let id of this.checkedItems) {
-              await fetch(`${process.env.ENDPOINT}/employees/${id}`, {
-                method: 'DELETE',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              });
-              this.items = this.items.filter((item) => item.EmployeeId != id);
-              this.checkedItems = this.checkedItems.filter(
-                (checkedId) => checkedId !== id
-              );
-            }
-            this.showDialog('Thông báo', 'Xóa thành công', 1);
-
-            // TODO: fix this
-            // window.location.reload();
-          } catch (e) {
-            console.error(e);
-            throw e;
-          }
-        } else {
+        this.showDialog(
+          'delete',
+          'Thông báo',
+          'Bạn có chắc chắn muốn xóa không?',
+          2
+        );
+      }
+    },
+    async deleteEmployeeDB() {
+      try {
+        for (let id of this.checkedItems) {
+          await fetch(`${process.env.ENDPOINT}/employees/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          this.items = this.items.filter((item) => item.EmployeeId != id);
+          this.checkedItems = this.checkedItems.filter(
+            (checkedId) => checkedId !== id
+          );
         }
+        this.showDialog('0', 'Thông báo', 'Xóa thành công', 1);
+
+        // TODO: fix this
+        // window.location.reload();
+      } catch (e) {
+        console.error(e);
+        throw e;
       }
     },
   },
@@ -407,8 +414,39 @@ tr:hover {
 }
 
 .checkbox {
+  content: '';
+
   width: 24px;
   height: 24px;
+}
+
+.checkbox::before {
+  display: block;
+  position: absolute;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  left: 0;
+  top: 5px;
+  background-color: #fa9e57;
+  font-family: 'Montserrat';
+  border-radius: 2px;
+  border: 1px solid rgb(150 150 150 / 30%);
+}
+
+input[type='checkbox']::before {
+  content: '';
+  display: block;
+  position: absolute;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  left: 0;
+  top: 5px;
+  background-color: #fa9e57;
+  font-family: 'Montserrat';
+  border-radius: 2px;
+  border: 1px solid rgb(150 150 150 / 30%);
 }
 
 .table__tooltip {
