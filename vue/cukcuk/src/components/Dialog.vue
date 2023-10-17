@@ -1,10 +1,15 @@
 <template>
-  <div class="dialog-container">
-    <h3 class="title">Tiêu đề</h3>
-    <p class="description">Mô tả</p>
-    <div class="row-3">
-      <button class="btn btn-2">Button 2</button>
-      <button class="btn btn-1">Button 1</button>
+  <div class="container">
+    <div class="dialog-container">
+      <h3 class="title">{{ this.title }}</h3>
+      <p class="description">{{ this.description }}</p>
+      <div class="row-3" v-if="type == 1">
+        <button class="btn btn-1" @click="handleResult('true')">OK</button>
+      </div>
+      <div class="row-3" v-if="type == 2">
+        <button class="btn btn-2" @click="handleResult('false')">Cancel</button>
+        <button class="btn btn-1" @click="handleResult('true')">OK</button>
+      </div>
     </div>
   </div>
 </template>
@@ -12,10 +17,51 @@
 /* eslint-disable */
 export default {
   name: 'Dialog',
+  props: {
+    title: String,
+    description: String,
+    type: String, // 1 = alert, 2= confrim
+  },
+  data() {
+    return {
+      result: '',
+    };
+  },
+  methods: {
+    handleResult(res) {
+      if (res == 'true') {
+        this.changeStateDialog(true);
+        this.closeDialog();
+      } else {
+        this.changeStateDialog(false);
+        this.closeDialog();
+      }
+    },
+    closeDialog() {
+      this.$emit('closeDialog');
+    },
+    changeStateDialog(req) {
+      this.$emit('changeStateDialog', req);
+    },
+  },
 };
 </script>
 <style scoped>
+.container {
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .dialog-container {
+  position: relative;
+  top: 15%;
+  left: calc((100% - 400px) / 2);
   width: 400px;
   height: 173px;
   background-color: #fff;

@@ -2,18 +2,18 @@
   <main id="home">
     <h1>Home</h1>
 
-    <Dialog></Dialog>
+    <!-- <Dialog></Dialog> -->
   </main>
 </template>
 
 <script>
-import Dialog from '../components/Dialog.vue';
+// import Dialog from '../components/Dialog.vue';
 
 /* eslint-disable */
 export default {
   name: 'Home',
   components: {
-    Dialog,
+    // Dialog,
   },
 };
 </script>

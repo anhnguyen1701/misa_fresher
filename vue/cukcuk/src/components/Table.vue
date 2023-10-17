@@ -34,8 +34,8 @@
             <th class="txt-left">Email</th>
             <th class="txt-left">Chức vụ</th>
             <th class="txt-left">Phòng ban</th>
-            <th class="txt-left">Mức lương cơ bản</th>
             <th class="txt-left">Tình trạng công việc</th>
+            <th class="txt-right">Mức lương cơ bản</th>
             <th class="txt-center" style="width: 100px"></th>
           </tr>
         </thead>
@@ -56,10 +56,10 @@
             <td class="txt-left">{{ item.Email }}</td>
             <td class="txt-left">{{ item.PositionName }}</td>
             <td class="txt-left">{{ item.DepartmentName }}</td>
+            <td class="txt-left">{{ convertWorkStatus(item.WorkStatus) }}</td>
             <td class="txt-right">
               {{ convertDebitAmount(item.Salary) }}
             </td>
-            <td class="txt-left">{{ convertWorkStatus(item.WorkStatus) }}</td>
 
             <td class="txt-center">
               <div class="table__tooltip">
@@ -101,11 +101,20 @@
       :action="modalAction"
       :item="modalItem"
     ></Modal>
+    <Dialog
+      v-if="isShowDiaglog"
+      :title="dialogTitle"
+      :description="dialogDesc"
+      :type="dialogType"
+      @closeDialog="closeDialog"
+      @changeStateDialog="changeStateDialog"
+    ></Dialog>
   </div>
 </template>
 
 <script>
 import Modal from '../components/Modal.vue';
+import Dialog from '../components/Dialog.vue';
 
 /* eslint-disable */
 export default {
@@ -118,6 +127,12 @@ export default {
       isModalVisible: false,
       modalAction: '',
       modalItem: {},
+
+      dialogTitle: '',
+      dialogDesc: '',
+      dialogType: '',
+      isShowDiaglog: false,
+      isDialogConfirm: false,
     };
   },
   methods: {
@@ -133,8 +148,22 @@ export default {
 
       this.isModalVisible = true;
     },
+    async showDialog(title, desc, type) {
+      this.dialogTitle = title;
+      this.dialogDesc = desc;
+      this.dialogType = type;
+      this.isShowDiaglog = true;
+    },
     closeModal() {
       this.isModalVisible = false;
+    },
+    closeDialog() {
+      this.isShowDiaglog = false;
+    },
+    changeStateDialog(state) {
+      console.log(state);
+      this.isDialogConfirm = state;
+      console.log(this.isDialogConfirm);
     },
     convertGender(x) {
       if (x == 0) return 'Nữ';
@@ -146,14 +175,19 @@ export default {
       else return 'Đang làm việc';
     },
     convertDOB(dob) {
-      let date = new Date(dob);
-      let d = date.getDate();
-      let m = date.getMonth() + 1;
-      let y = date.getFullYear();
+      let res = '';
+      try {
+        let date = new Date(dob);
+        let d = date.getDate();
+        let m = date.getMonth() + 1;
+        let y = date.getFullYear();
 
-      d = d < 10 ? `0${d}` : d;
-      m = m < 10 ? `0${m}` : m;
-      let res = `${d}/${m}/${y}`;
+        d = d < 10 ? `0${d}` : d;
+        m = m < 10 ? `0${m}` : m;
+        res = `${d}/${m}/${y}`;
+      } catch (error) {
+        console.log(error);
+      }
       return res;
     },
     convertDebitAmount(inp) {
@@ -173,19 +207,20 @@ export default {
             this.checkedItems.splice(i, 1);
           }
         }
-        console.log(this.checkedItems);
       } catch (error) {
         console.error(error);
       }
     },
     async deleteEmployee() {
       if (this.checkedItems.length == 0) {
-        alert('Không có item nào được chọn!');
+        // alert('Không có item nào được chọn!');
+        this.showDialog('Thông báo', 'Không có item nào được chọn!', 1);
       } else {
+        this.showDialog('Thông báo', 'Bạn có chắc chắn muốn xóa không?', 2);
         if (confirm('Bạn có chắc chắn muốn xóa không?')) {
           try {
             for (let id of this.checkedItems) {
-              await fetch(`${process.env.ENDPOINT}/Employees/${id}`, {
+              await fetch(`${process.env.ENDPOINT}/employees/${id}`, {
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
@@ -196,13 +231,13 @@ export default {
                 (checkedId) => checkedId !== id
               );
             }
-            alert('Xóa thành công');
+            this.showDialog('Thông báo', 'Xóa thành công', 1);
 
             // TODO: fix this
             // window.location.reload();
           } catch (e) {
-            throw e;
             console.error(e);
+            throw e;
           }
         } else {
         }
@@ -211,6 +246,7 @@ export default {
   },
   components: {
     Modal,
+    Dialog,
   },
   mounted() {
     try {
