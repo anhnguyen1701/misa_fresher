@@ -40,7 +40,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in items" v-bind:key="item.CustomerId">
+          <tr v-for="item in items" v-bind:key="item.EmployeeId">
             <td class="txt-center">
               <input
                 type="checkbox"
@@ -199,7 +199,7 @@ export default {
             alert('Xóa thành công');
 
             // TODO: fix this
-            window.location.reload();
+            // window.location.reload();
           } catch (e) {
             throw e;
             console.error(e);
