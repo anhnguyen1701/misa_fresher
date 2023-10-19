@@ -13,7 +13,10 @@
         </button>
       </div>
       <div class="right">
-        <button class="btn-add" @click="showModal('add')">
+        <button
+          class="btn-add"
+          @click="this.$emitter.emit('showModal', 'add', {})"
+        >
           <span class="icon"></span>
           <span> Thêm mới </span>
         </button>
@@ -65,7 +68,7 @@
               <div class="table__tooltip">
                 <button
                   class="table__tooltip--icon1"
-                  @click="showModal('edit', item)"
+                  @click="this.$emitter.emit('showModal', 'edit', item)"
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -95,12 +98,6 @@
       </div>
     </div>
 
-    <Modal
-      v-if="isModalVisible"
-      @closeFromTable="closeModal"
-      :action="modalAction"
-      :item="modalItem"
-    ></Modal>
     <Dialog
       v-if="isShowDiaglog"
       :action="dialogAction"
@@ -125,9 +122,6 @@ export default {
     return {
       items: [],
       checkedItems: [],
-      isModalVisible: false,
-      modalAction: '',
-      modalItem: {},
 
       dialogTitle: '',
       dialogAction: '',
@@ -138,27 +132,12 @@ export default {
     };
   },
   methods: {
-    showModal(action, item) {
-      this.modalAction = action;
-      if (action == 'edit') {
-        this.modalItem = item;
-      }
-
-      if (action == 'add') {
-        this.modalItem = {};
-      }
-
-      this.isModalVisible = true;
-    },
     showDialog(action, title, desc, type) {
       this.dialogAction = action;
       this.dialogTitle = title;
       this.dialogDesc = desc;
       this.dialogType = type;
       this.isShowDiaglog = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
     },
     closeDialog() {
       this.isShowDiaglog = false;

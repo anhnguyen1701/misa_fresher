@@ -5,18 +5,48 @@
       <Sidebar></Sidebar>
       <router-view />
     </div>
+    <Modal
+      v-if="isShowModal"
+      @closModal="isShowModal = false"
+      :action="modalAction"
+      :item="modalItem"
+    ></Modal>
   </div>
 </template>
 
 <script>
 import Sidebar from './components/Sidebar.vue';
 import Header from './components/Header.vue';
+import Modal from './components/Modal.vue';
 
 export default {
   name: 'App',
   components: {
     Sidebar,
     Header,
+    Modal,
+  },
+  data() {
+    return {
+      isShowModal: false,
+      modalAction: '',
+      modalItem: {},
+    };
+  },
+  methods: {
+    showModal(action, item) {
+      console.log('a');
+      this.modalAction = action;
+      if (action == 'edit') {
+        this.modalItem = item;
+      } else if (action == 'add') {
+        this.modalItem = {};
+      }
+      this.isShowModal = true;
+    },
+  },
+  created() {
+    this.$emitter.on('showModal', this.showModal);
   },
 };
 </script>

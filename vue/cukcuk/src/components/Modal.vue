@@ -160,7 +160,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('closeFromTable');
+      this.$emit('closModal');
     },
     closeDialog() {
       this.isShowDiaglog = false;
