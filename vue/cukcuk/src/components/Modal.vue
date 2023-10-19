@@ -180,29 +180,28 @@ export default {
           type: 2,
         });
         if (ok) {
-          fetch(`${process.env.ENDPOINT}/employees`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.data),
-          })
-            .then((res) => {
-              let data = res.json();
-              this.$refs.dialog
-                .show({
-                  title: 'Thông báo',
-                  desc: 'Thêm thành công',
-                  type: 3,
-                })
-                .then(() => {
-                  this.close();
-                });
-            })
-            .catch((e) => {
-              throw e;
-              console.error(e);
+          try {
+            let res = await this.axios.post(
+              `${process.env.ENDPOINT}/employees`,
+              this.data
+            );
+            this.$refs.dialog
+              .show({
+                title: 'Thông báo',
+                desc: 'Thêm',
+                type: 3,
+                status: res.status,
+              })
+              .then(() => {
+                this.close();
+              });
+          } catch (error) {
+            this.$refs.dialog.show({
+              title: 'Thông báo',
+              desc: error,
+              type: 1,
             });
+          }
         }
       }
     },
@@ -222,28 +221,26 @@ export default {
         });
         if (ok) {
           try {
-            const res = await fetch(
+            let res = await this.axios.put(
               `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
-              {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.data),
-              }
+              this.data
             );
-            if (res.status == 200) {
-              await this.$refs.dialog.show({
+            this.$refs.dialog
+              .show({
                 title: 'Thông báo',
-                desc: 'Sửa thành công',
+                desc: 'Sửa',
                 type: 3,
+                status: res.status,
+              })
+              .then(() => {
+                this.close();
               });
-
-              this.close();
-            }
-            // TODO: fix this
-            // window.location.reload();
           } catch (error) {
+            this.$refs.dialog.show({
+              title: 'Thông báo',
+              desc: error,
+              type: 1,
+            });
             console.log(error);
           }
         }

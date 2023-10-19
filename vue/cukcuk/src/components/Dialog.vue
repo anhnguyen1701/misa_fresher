@@ -38,6 +38,27 @@ export default {
       this.type = opts.type;
       this.isShowDialog = true;
 
+      let status = opts.status;
+
+      if (status == 200 || status == 201 || status == 204) {
+        this.desc += ' thành công!';
+      } else if (
+        status == 400 ||
+        status == 401 ||
+        status == 403 ||
+        status == 404
+      ) {
+        this.desc += ' thất bại.';
+      } else if (
+        status == 500 ||
+        status == 501 ||
+        status == 502 ||
+        status == 503 ||
+        status == 504
+      ) {
+        this.desc = 'Lỗi máy chủ.';
+      }
+
       return new Promise((resolve, reject) => {
         this.resolvePromise = resolve;
         this.rejectPromise = reject;
@@ -54,6 +75,7 @@ export default {
       this.resolvePromise(false);
     },
   },
+  created() {},
 };
 </script>
 <style scoped>

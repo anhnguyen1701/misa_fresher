@@ -176,28 +176,27 @@ export default {
         if (ok) {
           try {
             for (let id of this.checkedItems) {
-              await fetch(`${process.env.ENDPOINT}/employees/${id}`, {
-                method: 'DELETE',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              });
+              const res = await this.axios.delete(
+                `${process.env.ENDPOINT}/employees/${id}`
+              );
               this.items = this.items.filter((item) => item.EmployeeId != id);
               this.checkedItems = this.checkedItems.filter(
                 (checkedId) => checkedId !== id
               );
             }
+
             this.$refs.dialog.show({
               title: 'Thông báo',
               desc: 'Xóa thành công',
               type: 1,
             });
-
-            // TODO: fix this
-            // window.location.reload();
           } catch (e) {
+            this.$refs.dialog.show({
+              title: 'Thông báo',
+              desc: e,
+              type: 1,
+            });
             console.error(e);
-            throw e;
           }
         }
       }
@@ -208,10 +207,14 @@ export default {
   },
   mounted() {
     try {
-      fetch(`${process.env.ENDPOINT}/employees`)
-        .then((res) => res.json())
-        .then((data) => {
-          this.items = data;
+      this.axios
+        .get(`${process.env.ENDPOINT}/employees`)
+        .then((res) => {
+          if (res.status == 200) this.items = res.data;
+          else this.items = {};
+        })
+        .catch((rej) => {
+          console.log(rej);
         });
     } catch (error) {
       console.log(error);
