@@ -187,12 +187,17 @@ export default {
             },
             body: JSON.stringify(this.data),
           })
-            .then((res) => res.json())
-            .then((data) => {
-              //thong bao
-              this.showDialog('0', 'Thông báo', 'Thêm thành công', 1);
-              // TODO: fix this
-              // window.location.reload();
+            .then((res) => {
+              let data = res.json();
+              this.$refs.dialog
+                .show({
+                  title: 'Thông báo',
+                  desc: 'Thêm thành công',
+                  type: 3,
+                })
+                .then(() => {
+                  this.close();
+                });
             })
             .catch((e) => {
               throw e;
@@ -228,11 +233,13 @@ export default {
               }
             );
             if (res.status == 200) {
-              this.$refs.dialog.show({
+              await this.$refs.dialog.show({
                 title: 'Thông báo',
                 desc: 'Sửa thành công',
-                type: 1,
+                type: 3,
               });
+
+              this.close();
             }
             // TODO: fix this
             // window.location.reload();

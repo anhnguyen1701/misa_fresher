@@ -6,6 +6,9 @@
       <div class="row-3" v-if="type == 1">
         <button class="btn btn-1" @click="isShowDialog = false">OK</button>
       </div>
+      <div class="row-3" v-if="type == 3">
+        <button class="btn btn-1" @click="cancel">OK</button>
+      </div>
       <div class="row-3" v-if="type == 2">
         <button class="btn btn-2" @click="cancel">Cancel</button>
         <button class="btn btn-1" @click="confirm">OK</button>
@@ -22,7 +25,7 @@ export default {
       isShowDialog: false,
       title: undefined,
       desc: undefined,
-      type: undefined, // 1 = alert, 2= confrim
+      type: undefined, // 1 = alert, 2= confrim 3=ok & close modal
 
       resolvePromise: undefined,
       rejectPromise: undefined,
