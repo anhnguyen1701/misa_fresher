@@ -420,35 +420,6 @@ tr:hover {
   height: 24px;
 }
 
-.checkbox::before {
-  display: block;
-  position: absolute;
-  text-align: center;
-  height: 20px;
-  width: 20px;
-  left: 0;
-  top: 5px;
-  background-color: #fa9e57;
-  font-family: 'Montserrat';
-  border-radius: 2px;
-  border: 1px solid rgb(150 150 150 / 30%);
-}
-
-input[type='checkbox']::before {
-  content: '';
-  display: block;
-  position: absolute;
-  text-align: center;
-  height: 20px;
-  width: 20px;
-  left: 0;
-  top: 5px;
-  background-color: #fa9e57;
-  font-family: 'Montserrat';
-  border-radius: 2px;
-  border: 1px solid rgb(150 150 150 / 30%);
-}
-
 .table__tooltip {
   visibility: hidden;
 }
