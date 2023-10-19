@@ -6,5 +6,5 @@
 - doi mau checkbox
 - nut bo chon
 - an hien phan da chon, bo chon
-
+- doi modal sang kieu ref
 

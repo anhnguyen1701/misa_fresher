@@ -1,14 +1,17 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="isShowDialog" ref="dialog">
     <div class="dialog-container">
       <h3 class="title">{{ this.title }}</h3>
-      <p class="description">{{ this.description }}</p>
+      <p class="description">{{ this.desc }}</p>
       <div class="row-3" v-if="type == 1">
-        <button class="btn btn-1" @click="handleResult('true')">OK</button>
+        <button class="btn btn-1" @click="isShowDialog = false">OK</button>
+      </div>
+      <div class="row-3" v-if="type == 3">
+        <button class="btn btn-1" @click="cancel">OK</button>
       </div>
       <div class="row-3" v-if="type == 2">
-        <button class="btn btn-2" @click="handleResult('false')">Cancel</button>
-        <button class="btn btn-1" @click="handleResult('true')">OK</button>
+        <button class="btn btn-2" @click="cancel">Cancel</button>
+        <button class="btn btn-1" @click="confirm">OK</button>
       </div>
     </div>
   </div>
@@ -17,43 +20,38 @@
 /* eslint-disable */
 export default {
   name: 'Dialog',
-  props: {
-    action: String,
-    title: String,
-    description: String,
-    type: String, // 1 = alert, 2= confrim
-  },
-  data() {
+  data: () => {
     return {
-      result: '',
+      isShowDialog: false,
+      title: undefined,
+      desc: undefined,
+      type: undefined, // 1 = alert, 2= confrim 3=ok & close modal
+
+      resolvePromise: undefined,
+      rejectPromise: undefined,
     };
   },
   methods: {
-    handleResult(res) {
-      if (res == 'true') {
-        if (this.action == 'delete') {
-          this.delete();
-        } else if (this.action == 'add') {
-          this.add();
-        } else if (this.action == 'edit') {
-          this.edit();
-        }
-        this.closeDialog();
-      } else {
-        this.closeDialog();
-      }
+    show(opts = {}) {
+      this.title = opts.title;
+      this.desc = opts.desc;
+      this.type = opts.type;
+      this.isShowDialog = true;
+
+      return new Promise((resolve, reject) => {
+        this.resolvePromise = resolve;
+        this.rejectPromise = reject;
+      });
     },
-    closeDialog() {
-      this.$emit('closeDialog');
+
+    confirm() {
+      this.isShowDialog = false;
+      this.resolvePromise(true);
     },
-    delete() {
-      this.$emit('delete');
-    },
-    add() {
-      this.$emit('add');
-    },
-    edit() {
-      this.$emit('edit');
+
+    cancel() {
+      this.isShowDialog = false;
+      this.resolvePromise(false);
     },
   },
 };
