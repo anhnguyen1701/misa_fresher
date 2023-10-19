@@ -1,12 +1,9 @@
 <template>
-  <div id="add-modal" class="add-modal" v-if="isShowModal">
+  <div id="add-modal" class="add-modal">
     <div class="add-modal-container">
       <div class="row0">
         <h3>Thông tin nhân viên</h3>
-        <span
-          @click="isShowModal = false"
-          class="icon material-symbols-outlined"
-        >
+        <span @click="close" class="icon material-symbols-outlined">
           close
         </span>
       </div>
@@ -136,19 +133,19 @@ export default {
     Dialog,
   },
   props: {
-    employee: {},
+    action: String,
+    item: {},
   },
   data() {
     return {
       data: {},
       originData: {},
-
-      isShowModal: false,
-      action: undefined,
-      item: {},
     };
   },
   methods: {
+    close() {
+      this.$emit('closModal');
+    },
     convertDOB(dob) {
       let date = new Date(dob);
       let d = date.getDate();
@@ -167,17 +164,6 @@ export default {
         currency: 'VND',
       }).format(inp);
       return res;
-    },
-
-    show(opts = {}) {
-      this.isShowModal = true;
-      this.action = opts.action;
-      if (this.action == 'edit') {
-        this.item = opts.item;
-      } else if (this.action == 'add') {
-        this.item = {};
-      }
-      console.log(this.employee);
     },
 
     async addEmployee() {
@@ -258,8 +244,6 @@ export default {
     },
   },
   created() {
-    console.log(this.employee);
-
     this.data = this.item;
     try {
       let dob = this.data.DateOfBirth;

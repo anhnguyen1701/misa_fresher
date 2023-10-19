@@ -94,13 +94,11 @@
         </span>
       </div>
     </div>
-    <Modal ref="modal"></Modal>
     <Dialog ref="dialog" v-model="modalItem"></Dialog>
   </div>
 </template>
 
 <script>
-import Modal from '../components/Modal.vue';
 import Dialog from '../components/Dialog.vue';
 
 /* eslint-disable */
@@ -160,8 +158,7 @@ export default {
       }
     },
     openModal(action, item) {
-      this.modalItem = item;
-      this.$refs.modal.show({ action, item });
+      this.$emitter.emit('showModal', action, item);
     },
     async deleteEmployee() {
       if (this.checkedItems.length == 0) {
@@ -207,7 +204,6 @@ export default {
     },
   },
   components: {
-    Modal,
     Dialog,
   },
   mounted() {
