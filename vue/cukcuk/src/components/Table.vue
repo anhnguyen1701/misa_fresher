@@ -13,10 +13,7 @@
         </button>
       </div>
       <div class="right">
-        <button
-          class="btn-add"
-          @click="this.$emitter.emit('showModal', 'add', {})"
-        >
+        <button class="btn-add" @click="openModal('add', {})">
           <span class="icon"></span>
           <span> Thêm mới </span>
         </button>
@@ -68,7 +65,7 @@
               <div class="table__tooltip">
                 <button
                   class="table__tooltip--icon1"
-                  @click="this.$emitter.emit('showModal', 'edit', item)"
+                  @click="openModal('edit', item)"
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -97,6 +94,7 @@
         </span>
       </div>
     </div>
+    <Modal ref="modal"></Modal>
     <Dialog ref="dialog"></Dialog>
   </div>
 </template>
@@ -108,7 +106,6 @@ import Dialog from '../components/Dialog.vue';
 /* eslint-disable */
 export default {
   name: 'Table',
-  props: {},
   data() {
     return {
       items: [],
@@ -162,6 +159,9 @@ export default {
         console.error(error);
       }
     },
+    openModal(action, item) {
+      this.$refs.modal.show({ action, item });
+    },
     async deleteEmployee() {
       if (this.checkedItems.length == 0) {
         this.$refs.dialog.show({
@@ -214,7 +214,6 @@ export default {
       fetch(`${process.env.ENDPOINT}/employees`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           this.items = data;
         });
     } catch (error) {

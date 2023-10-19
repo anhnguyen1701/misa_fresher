@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-show="isShowDialog" ref="dialog">
+  <div class="container" v-if="isShowDialog" ref="dialog">
     <div class="dialog-container">
       <h3 class="title">{{ this.title }}</h3>
       <p class="description">{{ this.desc }}</p>
@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     show(opts = {}) {
-      console.log(opts);
       this.title = opts.title;
       this.desc = opts.desc;
       this.type = opts.type;

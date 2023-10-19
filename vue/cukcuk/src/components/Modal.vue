@@ -1,9 +1,12 @@
 <template>
-  <div id="add-modal" class="add-modal">
+  <div id="add-modal" class="add-modal" v-if="isShowModal">
     <div class="add-modal-container">
       <div class="row0">
         <h3>Thông tin nhân viên</h3>
-        <span @click="close" class="icon material-symbols-outlined">
+        <span
+          @click="isShowModal = false"
+          class="icon material-symbols-outlined"
+        >
           close
         </span>
       </div>
@@ -102,7 +105,7 @@
         </label>
       </div>
       <div class="row7">
-        <button class="btn-huy btn" @click="close">Hủy</button>
+        <button class="btn-huy btn" @click="isShowModal = false">Hủy</button>
         <button
           v-if="this.action == 'add'"
           class="btn-cat btn"
@@ -129,10 +132,6 @@ import Dialog from '../components/Dialog.vue';
 /* eslint-disable */
 export default {
   name: 'Modal',
-  props: {
-    action: String,
-    item: {},
-  },
   components: {
     Dialog,
   },
@@ -140,12 +139,13 @@ export default {
     return {
       data: {},
       originData: {},
+
+      isShowModal: false,
+      action: undefined,
+      item: undefined,
     };
   },
   methods: {
-    close() {
-      this.$emit('closModal');
-    },
     convertDOB(dob) {
       let date = new Date(dob);
       let d = date.getDate();
@@ -157,6 +157,7 @@ export default {
       let res = `${y}-${m}-${d}`;
       return res;
     },
+
     convertDebitAmount(inp) {
       let res = new Intl.NumberFormat('it-IT', {
         style: 'currency',
@@ -164,6 +165,18 @@ export default {
       }).format(inp);
       return res;
     },
+
+    show(opts = {}) {
+      console.log(opts);
+      this.action = opts.action;
+      if (this.action == 'edit') {
+        this.item = opts.item;
+      } else if (this.action == 'add') {
+        this.item = {};
+      }
+      this.isShowModal = true;
+    },
+
     async addEmployee() {
       if (this.originData == JSON.stringify(this.data)) {
         this.$refs.dialog.show({
@@ -199,6 +212,7 @@ export default {
         }
       }
     },
+
     async editEmployee() {
       if (this.originData == JSON.stringify(this.data)) {
         this.$refs.dialog.show({
@@ -241,21 +255,22 @@ export default {
     },
   },
   created() {
+    console.log(this.item);
     this.data = this.item;
-    let dob = this.data.DateOfBirth;
-    let iDate = this.data.IdentityDate;
+    try {
+      let dob = this.data.DateOfBirth;
+      let iDate = this.data.IdentityDate;
 
-    if (dob != null && dob != '' && dob.length > 0) {
-      this.data.DateOfBirth = this.convertDOB(dob);
-    }
+      if (dob != null && dob != '' && dob.length > 0) {
+        this.data.DateOfBirth = this.convertDOB(dob);
+      }
 
-    if (iDate != null && iDate != '' && iDate.length > 0) {
-      this.data.DateOfBirth = this.convertDOB(iDate);
-    }
+      if (iDate != null && iDate != '' && iDate.length > 0) {
+        this.data.DateOfBirth = this.convertDOB(iDate);
+      }
 
-    this.originData = JSON.stringify(this.data);
-
-    console.log(this.action);
+      this.originData = JSON.stringify(this.data);
+    } catch (error) {}
   },
 };
 </script>
