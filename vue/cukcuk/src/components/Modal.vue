@@ -166,6 +166,51 @@ export default {
       return res;
     },
 
+    validateForm() {
+      let validateList = [];
+      let {
+        EmployeeCode,
+        FullName,
+        DateOfBirth,
+        Gender,
+        PhoneNumber,
+        IdentityNumber,
+        IdentityDate,
+        Email,
+        IdentityPlace,
+        Salary,
+        DepartmentName,
+        Address,
+      } = this.data;
+
+      if (EmployeeCode == '') {
+        validateList.push('Không được để trống Mã nhân viên');
+      } else {
+        if (!EmployeeCode.includes('NV')) {
+          validateList.push('Mã nhân viên phải chứa ký tự NV');
+        }
+      }
+
+      if (FullName == '') {
+        validateList.push('Không được để trống Họ và tên');
+      }
+
+      if (Email == '') {
+        validateList.push('Không được để trống Email');
+      }
+
+      if (PhoneNumber == '') {
+        validateList.push('Không được để trống Số điện thoại');
+      }
+
+      if (IdentityNumber == '') {
+        validateList.push('Không được để trống Số CMND');
+      }
+
+      let check = validateList.length > 0 ? false : true;
+      return { check, validateList };
+    },
+
     async addEmployee() {
       if (this.originData == JSON.stringify(this.data)) {
         this.$refs.dialog.show({
@@ -174,34 +219,44 @@ export default {
           type: 1,
         });
       } else {
-        const ok = await this.$refs.dialog.show({
-          title: 'Thông báo',
-          desc: 'Bạn có chắc chắn muốn thêm không?',
-          type: 2,
-        });
-        if (ok) {
-          try {
-            let res = await this.axios.post(
-              `${process.env.ENDPOINT}/employees`,
-              this.data
-            );
-            this.$refs.dialog
-              .show({
+        let { check, validateList } = this.validateForm();
+
+        if (check) {
+          const ok = await this.$refs.dialog.show({
+            title: 'Thông báo',
+            desc: 'Bạn có chắc chắn muốn thêm không?',
+            type: 2,
+          });
+          if (ok) {
+            try {
+              let res = await this.axios.post(
+                `${process.env.ENDPOINT}/employees`,
+                this.data
+              );
+              this.$refs.dialog
+                .show({
+                  title: 'Thông báo',
+                  desc: 'Thêm',
+                  type: 3,
+                  status: res.status,
+                })
+                .then(() => {
+                  this.close();
+                });
+            } catch (error) {
+              this.$refs.dialog.show({
                 title: 'Thông báo',
-                desc: 'Thêm',
-                type: 3,
-                status: res.status,
-              })
-              .then(() => {
-                this.close();
+                desc: error,
+                type: 1,
               });
-          } catch (error) {
-            this.$refs.dialog.show({
-              title: 'Thông báo',
-              desc: error,
-              type: 1,
-            });
+            }
           }
+        } else {
+          this.$refs.dialog.show({
+            title: 'Sửa để tiếp tục',
+            validateList,
+            type: 1,
+          });
         }
       }
     },

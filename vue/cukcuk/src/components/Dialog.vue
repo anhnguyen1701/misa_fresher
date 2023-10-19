@@ -59,6 +59,8 @@ export default {
         this.desc = 'Lỗi máy chủ.';
       }
 
+      console.log(opts.validateList);
+
       return new Promise((resolve, reject) => {
         this.resolvePromise = resolve;
         this.rejectPromise = reject;
