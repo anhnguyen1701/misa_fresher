@@ -47,6 +47,7 @@ export default {
   },
   created() {
     this.$emitter.on('showModal', this.showModal);
+    // this.$emitter.on('showDialog', this.showDialog);
   },
 };
 </script>

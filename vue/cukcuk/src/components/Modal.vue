@@ -119,16 +119,7 @@
         </button>
       </div>
     </div>
-    <Dialog
-      v-if="isShowDiaglog"
-      :action="dialogAction"
-      :title="dialogTitle"
-      :description="dialogDesc"
-      :type="dialogType"
-      @closeDialog="closeDialog"
-      @add="addEmployeeDB"
-      @edit="editEmployeeDB"
-    ></Dialog>
+    <Dialog ref="dialog"></Dialog>
   </div>
 </template>
 
@@ -149,29 +140,11 @@ export default {
     return {
       data: {},
       originData: {},
-
-      dialogTitle: '',
-      dialogAction: '',
-      dialogDesc: '',
-      dialogType: '',
-      isShowDiaglog: false,
-      isDialogConfirm: false,
     };
   },
   methods: {
     close() {
       this.$emit('closModal');
-    },
-    closeDialog() {
-      this.isShowDiaglog = false;
-    },
-    showDialog(action, title, desc, type) {
-      console.log(action, title, desc, type);
-      this.dialogAction = action;
-      this.dialogTitle = title;
-      this.dialogDesc = desc;
-      this.dialogType = type;
-      this.isShowDiaglog = true;
     },
     convertDOB(dob) {
       let date = new Date(dob);
@@ -191,71 +164,79 @@ export default {
       }).format(inp);
       return res;
     },
-    addEmployee() {
+    async addEmployee() {
       if (this.originData == JSON.stringify(this.data)) {
-        this.showDialog('0', 'Thông báo', 'Điền các trường để tiếp tục', 1);
-      } else {
-        this.showDialog(
-          'add',
-          'Thông báo',
-          'Bạn có chắc chắn muốn thêm không',
-          2
-        );
-      }
-    },
-    addEmployeeDB() {
-      fetch(`${process.env.ENDPOINT}/employees`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          //thong bao
-          this.showDialog('0', 'Thông báo', 'Thêm thành công', 1);
-          // TODO: fix this
-          // window.location.reload();
-        })
-        .catch((e) => {
-          throw e;
-          console.error(e);
+        this.$refs.dialog.show({
+          title: 'Thông báo',
+          desc: 'Điền các trường để tiếp tục',
+          type: 1,
         });
-    },
-    async editEmployee() {
-      if (this.originData == JSON.stringify(this.data)) {
-        this.showDialog('0', 'Thông báo', 'Không có thay đổi', 1);
       } else {
-        this.showDialog(
-          'edit',
-          'Thông báo',
-          'Bạn có chắc chắn thay đổi không?',
-          2
-        );
-      }
-    },
-    async editEmployeeDB() {
-      this.showDialog('0', 'Thông báo', 'Sửa thành công', 1);
-
-      try {
-        const res = await fetch(
-          `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
-          {
-            method: 'PUT',
+        const ok = await this.$refs.dialog.show({
+          title: 'Thông báo',
+          desc: 'Bạn có chắc chắn muốn thêm không?',
+          type: 2,
+        });
+        if (ok) {
+          fetch(`${process.env.ENDPOINT}/employees`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(this.data),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              //thong bao
+              this.showDialog('0', 'Thông báo', 'Thêm thành công', 1);
+              // TODO: fix this
+              // window.location.reload();
+            })
+            .catch((e) => {
+              throw e;
+              console.error(e);
+            });
+        }
+      }
+    },
+    async editEmployee() {
+      if (this.originData == JSON.stringify(this.data)) {
+        this.$refs.dialog.show({
+          title: 'Thông báo',
+          desc: 'Không có thay đổi',
+          type: 1,
+        });
+      } else {
+        const ok = await this.$refs.dialog.show({
+          title: 'Thông báo',
+          desc: 'Bạn có chắc chắn thay đổi không?',
+          type: 2,
+        });
+        if (ok) {
+          try {
+            const res = await fetch(
+              `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
+              {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.data),
+              }
+            );
+            if (res.status == 200) {
+              this.$refs.dialog.show({
+                title: 'Thông báo',
+                desc: 'Sửa thành công',
+                type: 1,
+              });
+            }
+            // TODO: fix this
+            // window.location.reload();
+          } catch (error) {
+            console.log(error);
           }
-        );
-        if (res.status == 200)
-          this.showDialog('0', 'Thông báo', 'Sửa thành công', 1);
-
-        // TODO: fix this
-        // window.location.reload();
-      } catch (error) {
-        console.log(error);
+        }
       }
     },
   },

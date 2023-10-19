@@ -97,16 +97,7 @@
         </span>
       </div>
     </div>
-
-    <Dialog
-      v-if="isShowDiaglog"
-      :action="dialogAction"
-      :title="dialogTitle"
-      :description="dialogDesc"
-      :type="dialogType"
-      @closeDialog="closeDialog"
-      @delete="deleteEmployeeDB"
-    ></Dialog>
+    <Dialog ref="dialog"></Dialog>
   </div>
 </template>
 
@@ -122,31 +113,9 @@ export default {
     return {
       items: [],
       checkedItems: [],
-
-      dialogTitle: '',
-      dialogAction: '',
-      dialogDesc: '',
-      dialogType: '',
-      isShowDiaglog: false,
-      isDialogConfirm: false,
     };
   },
   methods: {
-    showDialog(action, title, desc, type) {
-      this.dialogAction = action;
-      this.dialogTitle = title;
-      this.dialogDesc = desc;
-      this.dialogType = type;
-      this.isShowDiaglog = true;
-    },
-    closeDialog() {
-      this.isShowDiaglog = false;
-    },
-    changeStateDialog(state) {
-      console.log(state);
-      this.isDialogConfirm = state;
-      console.log(this.isDialogConfirm);
-    },
     convertGender(x) {
       if (x == 0) return 'Nữ';
       else return 'Nam';
@@ -195,38 +164,44 @@ export default {
     },
     async deleteEmployee() {
       if (this.checkedItems.length == 0) {
-        // alert('Không có item nào được chọn!');
-        this.showDialog('0', 'Thông báo', 'Không có item nào được chọn!', 1);
+        this.$refs.dialog.show({
+          title: 'Thông báo',
+          desc: 'Không có item nào được chọn!',
+          type: 1,
+        });
       } else {
-        this.showDialog(
-          'delete',
-          'Thông báo',
-          'Bạn có chắc chắn muốn xóa không?',
-          2
-        );
-      }
-    },
-    async deleteEmployeeDB() {
-      try {
-        for (let id of this.checkedItems) {
-          await fetch(`${process.env.ENDPOINT}/employees/${id}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          this.items = this.items.filter((item) => item.EmployeeId != id);
-          this.checkedItems = this.checkedItems.filter(
-            (checkedId) => checkedId !== id
-          );
-        }
-        this.showDialog('0', 'Thông báo', 'Xóa thành công', 1);
+        const ok = await this.$refs.dialog.show({
+          title: 'Thông báo',
+          desc: 'Bạn có chắc chắn muốn xóa không?',
+          type: 2,
+        });
+        if (ok) {
+          try {
+            for (let id of this.checkedItems) {
+              await fetch(`${process.env.ENDPOINT}/employees/${id}`, {
+                method: 'DELETE',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+              this.items = this.items.filter((item) => item.EmployeeId != id);
+              this.checkedItems = this.checkedItems.filter(
+                (checkedId) => checkedId !== id
+              );
+            }
+            this.$refs.dialog.show({
+              title: 'Thông báo',
+              desc: 'Xóa thành công',
+              type: 1,
+            });
 
-        // TODO: fix this
-        // window.location.reload();
-      } catch (e) {
-        console.error(e);
-        throw e;
+            // TODO: fix this
+            // window.location.reload();
+          } catch (e) {
+            console.error(e);
+            throw e;
+          }
+        }
       }
     },
   },
@@ -236,12 +211,10 @@ export default {
   },
   mounted() {
     try {
-      console.log(process.env.ENDPOINT);
       fetch(`${process.env.ENDPOINT}/employees`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          // console.log(data[0]);
           this.items = data;
         });
     } catch (error) {
