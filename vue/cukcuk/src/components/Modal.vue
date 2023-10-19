@@ -135,6 +135,9 @@ export default {
   components: {
     Dialog,
   },
+  props: {
+    employee: {},
+  },
   data() {
     return {
       data: {},
@@ -142,7 +145,7 @@ export default {
 
       isShowModal: false,
       action: undefined,
-      item: undefined,
+      item: {},
     };
   },
   methods: {
@@ -167,14 +170,14 @@ export default {
     },
 
     show(opts = {}) {
-      console.log(opts);
+      this.isShowModal = true;
       this.action = opts.action;
       if (this.action == 'edit') {
         this.item = opts.item;
       } else if (this.action == 'add') {
         this.item = {};
       }
-      this.isShowModal = true;
+      console.log(this.employee);
     },
 
     async addEmployee() {
@@ -255,7 +258,8 @@ export default {
     },
   },
   created() {
-    console.log(this.item);
+    console.log(this.employee);
+
     this.data = this.item;
     try {
       let dob = this.data.DateOfBirth;

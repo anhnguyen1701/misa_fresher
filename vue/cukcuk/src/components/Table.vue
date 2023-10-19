@@ -95,7 +95,7 @@
       </div>
     </div>
     <Modal ref="modal"></Modal>
-    <Dialog ref="dialog"></Dialog>
+    <Dialog ref="dialog" v-model="modalItem"></Dialog>
   </div>
 </template>
 
@@ -160,6 +160,7 @@ export default {
       }
     },
     openModal(action, item) {
+      this.modalItem = item;
       this.$refs.modal.show({ action, item });
     },
     async deleteEmployee() {
