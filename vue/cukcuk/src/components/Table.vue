@@ -165,11 +165,13 @@ export default {
         this.$refs.dialog.show({
           title: 'Thông báo',
           desc: 'Không có item nào được chọn!',
+          logo: 'info',
           type: 1,
         });
       } else {
         const ok = await this.$refs.dialog.show({
           title: 'Thông báo',
+          logo: 'info',
           desc: 'Bạn có chắc chắn muốn xóa không?',
           type: 2,
         });
@@ -186,6 +188,7 @@ export default {
             }
 
             this.$refs.dialog.show({
+              logo: 'info',
               title: 'Thông báo',
               desc: 'Xóa thành công',
               type: 1,
@@ -193,6 +196,7 @@ export default {
           } catch (e) {
             this.$refs.dialog.show({
               title: 'Thông báo',
+              logo: 'error',
               desc: e,
               type: 1,
             });
