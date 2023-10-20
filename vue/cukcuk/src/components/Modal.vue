@@ -305,38 +305,48 @@ export default {
           type: 1,
         });
       } else {
-        const ok = await this.$refs.dialog.show({
-          title: 'Thông báo',
-          desc: 'Bạn có chắc chắn thay đổi không?',
-          logo: 'warning',
-          type: 2,
-        });
-        if (ok) {
-          try {
-            let res = await this.axios.put(
-              `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
-              this.data
-            );
-            this.$refs.toast.show({ message: 'Sửa', status: res.status });
-            this.$refs.dialog
-              .show({
+        let check = this.validateForm();
+        if (check) {
+          const ok = await this.$refs.dialog.show({
+            title: 'Thông báo',
+            desc: 'Bạn có chắc chắn thay đổi không?',
+            logo: 'warning',
+            type: 2,
+          });
+          if (ok) {
+            try {
+              let res = await this.axios.put(
+                `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
+                this.data
+              );
+              this.$refs.toast.show({ message: 'Sửa', status: res.status });
+              this.$refs.dialog
+                .show({
+                  title: 'Thông báo',
+                  desc: 'Sửa',
+                  type: 3,
+                  status: res.status,
+                })
+                .then(() => {
+                  this.close();
+                });
+            } catch (error) {
+              this.$refs.dialog.show({
                 title: 'Thông báo',
-                desc: 'Sửa',
-                type: 3,
-                status: res.status,
-              })
-              .then(() => {
-                this.close();
+                desc: error,
+                logo: 'error',
+                type: 1,
               });
-          } catch (error) {
-            this.$refs.dialog.show({
-              title: 'Thông báo',
-              desc: error,
-              logo: 'error',
-              type: 1,
-            });
-            console.log(error);
+              console.log(error);
+            }
           }
+        } else {
+          this.$refs.dialog.show({
+            title: 'Thông báo',
+            desc: 'Sửa để tiếp tục',
+            logo: 'warning',
+            type: 1,
+          });
         }
       }
     },
