@@ -11,10 +11,16 @@
         <label class="add-modal-makh modal-lb">
           <span> Mã nhân viên <span style="color: red">*</span> </span>
           <input type="text" class="modal-inp" v-model="data.EmployeeCode" />
+          <span class="error" v-if="validate.hasOwnProperty('EmployeeCode')">
+            {{ validate.EmployeeCode }}
+          </span>
         </label>
         <label class="add-modal-makh modal-lb">
           Họ và tên
           <input type="text" class="modal-inp" v-model="data.FullName" />
+          <span class="error" v-if="validate.hasOwnProperty('FullName')">
+            {{ validate.FullName }}
+          </span>
         </label>
         <label class="add-modal-makh modal-lb">
           Ngày sinh
@@ -59,10 +65,16 @@
         <label class="add-modal-sdt modal-lb">
           Số điện thoại
           <input type="text" class="modal-inp" v-model="data.PhoneNumber" />
+          <span class="error" v-if="validate.hasOwnProperty('PhoneNumber')">
+            {{ validate.PhoneNumber }}
+          </span>
         </label>
         <label class="add-modal-makh modal-lb">
           Số CMTND
           <input type="text" class="modal-inp" v-model="data.IdentityNumber" />
+          <span class="error" v-if="validate.hasOwnProperty('IdentityNumber')">
+            {{ validate.IdentityNumber }}
+          </span>
         </label>
         <label class="add-modal-makh modal-lb">
           Ngày cấp
@@ -74,6 +86,9 @@
         <label class="add-modal-email modal-lb">
           Email
           <input type="text" class="modal-inp" v-model="data.Email" />
+          <span class="error" v-if="validate.hasOwnProperty('Email')">
+            {{ validate.Email }}
+          </span>
         </label>
         <label class="add-modal-noicap modal-lb">
           Nơi cấp
@@ -120,17 +135,20 @@
       </div>
     </div>
     <Dialog ref="dialog"></Dialog>
+    <Toast ref="toast"></Toast>
   </div>
 </template>
 
 <script>
 import Dialog from '../components/Dialog.vue';
+import Toast from '../components/Toast.vue';
 
 /* eslint-disable */
 export default {
   name: 'Modal',
   components: {
     Dialog,
+    Toast,
   },
   props: {
     action: String,
@@ -140,6 +158,7 @@ export default {
     return {
       data: {},
       originData: {},
+      validate: {},
     };
   },
   methods: {
@@ -166,43 +185,113 @@ export default {
       return res;
     },
 
+    checkEmptyString(test) {
+      if (test == null) return true;
+      else if (test == undefined) return true;
+      else if (test == '') return true;
+      return false;
+    },
+
+    validateForm() {
+      let {
+        EmployeeCode,
+        FullName,
+        DateOfBirth,
+        Gender,
+        PhoneNumber,
+        IdentityNumber,
+        IdentityDate,
+        Email,
+        IdentityPlace,
+        Salary,
+        DepartmentName,
+        Address,
+      } = this.data;
+      this.validate = {};
+
+      if (this.checkEmptyString(EmployeeCode)) {
+        console.log(EmployeeCode);
+        this.validate.EmployeeCode = 'Không được để trống Mã nhân viên';
+        // validateList.push('Không được để trống Mã nhân viên');
+      }
+
+      if (this.checkEmptyString(FullName)) {
+        this.validate.FullName = 'Không được để trống Họ và tên';
+        // validateList.push('Không được để trống Họ và tên');
+      }
+
+      if (this.checkEmptyString(Email)) {
+        this.validate.Email = 'Không được để trống Email';
+        // validateList.push('Không được để trống Email');
+      }
+
+      if (this.checkEmptyString(PhoneNumber)) {
+        this.validate.PhoneNumber = 'Không được để trống Số điện thoại';
+        // validateList.push('Không được để trống Số điện thoại');
+      }
+
+      if (this.checkEmptyString(IdentityNumber)) {
+        this.validate.IdentityNumber = 'Không được để trống Số CMND';
+        // validateList.push('Không được để trống Số CMND');
+      }
+
+      // let check = validateList.length > 0 ? false : true;
+      // return { check, validateList };
+
+      return Object.keys(this.validate).length == 0;
+    },
+
     async addEmployee() {
       if (this.originData == JSON.stringify(this.data)) {
         this.$refs.dialog.show({
           title: 'Thông báo',
           desc: 'Điền các trường để tiếp tục',
+          logo: 'warning',
           type: 1,
         });
       } else {
-        const ok = await this.$refs.dialog.show({
-          title: 'Thông báo',
-          desc: 'Bạn có chắc chắn muốn thêm không?',
-          type: 2,
-        });
-        if (ok) {
-          fetch(`${process.env.ENDPOINT}/employees`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.data),
-          })
-            .then((res) => {
-              let data = res.json();
+        let check = this.validateForm();
+
+        if (check) {
+          const ok = await this.$refs.dialog.show({
+            title: 'Thông báo',
+            desc: 'Bạn có chắc chắn muốn thêm không?',
+            logo: 'warning',
+            type: 2,
+          });
+          if (ok) {
+            try {
+              let res = await this.axios.post(
+                `${process.env.ENDPOINT}/employees`,
+                this.data
+              );
+              this.$refs.toast.show({ message: 'Thêm', status: res.status });
               this.$refs.dialog
                 .show({
                   title: 'Thông báo',
-                  desc: 'Thêm thành công',
+                  desc: 'Thêm',
                   type: 3,
+                  status: res.status,
                 })
                 .then(() => {
                   this.close();
                 });
-            })
-            .catch((e) => {
-              throw e;
-              console.error(e);
-            });
+            } catch (error) {
+              this.$refs.dialog.show({
+                title: 'Thông báo',
+                logo: 'error',
+                desc: error,
+                type: 1,
+              });
+            }
+          }
+        } else {
+          this.$refs.dialog.show({
+            title: 'Thông báo',
+            desc: 'Sửa để tiếp tục',
+            logo: 'warning',
+            type: 1,
+          });
         }
       }
     },
@@ -212,38 +301,40 @@ export default {
         this.$refs.dialog.show({
           title: 'Thông báo',
           desc: 'Không có thay đổi',
+          logo: 'warning',
           type: 1,
         });
       } else {
         const ok = await this.$refs.dialog.show({
           title: 'Thông báo',
           desc: 'Bạn có chắc chắn thay đổi không?',
+          logo: 'warning',
           type: 2,
         });
         if (ok) {
           try {
-            const res = await fetch(
+            let res = await this.axios.put(
               `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
-              {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.data),
-              }
+              this.data
             );
-            if (res.status == 200) {
-              await this.$refs.dialog.show({
+            this.$refs.toast.show({ message: 'Sửa', status: res.status });
+            this.$refs.dialog
+              .show({
                 title: 'Thông báo',
-                desc: 'Sửa thành công',
+                desc: 'Sửa',
                 type: 3,
+                status: res.status,
+              })
+              .then(() => {
+                this.close();
               });
-
-              this.close();
-            }
-            // TODO: fix this
-            // window.location.reload();
           } catch (error) {
+            this.$refs.dialog.show({
+              title: 'Thông báo',
+              desc: error,
+              logo: 'error',
+              type: 1,
+            });
             console.log(error);
           }
         }
@@ -302,10 +393,17 @@ export default {
   font-weight: 600;
 }
 
+.modal-inp:focus {
+  border-color: #50b83c;
+}
+
 .modal-inp {
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   height: 36px;
+  padding: 1rem;
+  margin-top: 0.3rem;
+  outline: none;
 }
 
 .row0,
@@ -337,11 +435,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
-}
-
-.modal-inp {
-  padding: 1rem;
-  margin-top: 0.3rem;
+  flex-shrink: 1;
 }
 
 .add-modal-sdt,
@@ -413,5 +507,10 @@ export default {
 .modal-radio {
   width: 24px;
   height: 24px;
+}
+
+.error {
+  color: red;
+  font-size: 10px;
 }
 </style>
