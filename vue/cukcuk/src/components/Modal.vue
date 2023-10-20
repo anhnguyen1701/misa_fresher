@@ -135,17 +135,20 @@
       </div>
     </div>
     <Dialog ref="dialog"></Dialog>
+    <Toast ref="toast"></Toast>
   </div>
 </template>
 
 <script>
 import Dialog from '../components/Dialog.vue';
+import Toast from '../components/Toast.vue';
 
 /* eslint-disable */
 export default {
   name: 'Modal',
   components: {
     Dialog,
+    Toast,
   },
   props: {
     action: String,
@@ -262,6 +265,7 @@ export default {
                 `${process.env.ENDPOINT}/employees`,
                 this.data
               );
+              this.$refs.toast.show({ message: 'Thêm', status: res.status });
               this.$refs.dialog
                 .show({
                   title: 'Thông báo',
@@ -313,6 +317,7 @@ export default {
               `${process.env.ENDPOINT}/employees/${this.data.EmployeeId}`,
               this.data
             );
+            this.$refs.toast.show({ message: 'Sửa', status: res.status });
             this.$refs.dialog
               .show({
                 title: 'Thông báo',

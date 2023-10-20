@@ -186,7 +186,6 @@ export default {
                 (checkedId) => checkedId !== id
               );
             }
-
             this.$refs.dialog.show({
               logo: 'info',
               title: 'Thông báo',

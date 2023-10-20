@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="isShowDialog" ref="dialog">
+  <div class="container" v-if="isShowDialog">
     <div class="dialog-container">
       <h3 class="title">{{ this.title }}</h3>
       <div class="description">
@@ -98,7 +98,6 @@ export default {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-
   color: white;
 }
 
