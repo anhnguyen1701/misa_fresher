@@ -105,6 +105,10 @@ aside {
   background-color: var(--sidebar-hover);
 }
 
+.router-link-active {
+  background-color: var(--sidebar-hover);
+}
+
 .link:first-child {
   margin-top: 20px;
 }
