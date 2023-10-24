@@ -353,19 +353,30 @@ export default {
   },
   created() {
     this.data = this.item;
+
     try {
-      let dob = this.data.DateOfBirth;
-      let iDate = this.data.IdentityDate;
+      if (this.action == 'edit') {
+        let dob = this.data.DateOfBirth;
+        let iDate = this.data.IdentityDate;
 
-      if (dob != null && dob != '' && dob.length > 0) {
-        this.data.DateOfBirth = this.convertDOB(dob);
+        if (dob != null && dob != '' && dob.length > 0) {
+          this.data.DateOfBirth = this.convertDOB(dob);
+        }
+
+        if (iDate != null && iDate != '' && iDate.length > 0) {
+          this.data.DateOfBirth = this.convertDOB(iDate);
+        }
       }
-
-      if (iDate != null && iDate != '' && iDate.length > 0) {
-        this.data.DateOfBirth = this.convertDOB(iDate);
-      }
-
       this.originData = JSON.stringify(this.data);
+
+      if (this.action == 'add') {
+        this.axios
+          .get('https://cukcuk.manhnv.net/api/v1/Employees/NewEmployeeCode')
+          .then((res) => {
+            let tmp = parseInt(res.data.split('-')[1]) + 1;
+            this.data.EmployeeCode = 'NV-' + tmp;
+          });
+      }
     } catch (error) {}
   },
 };

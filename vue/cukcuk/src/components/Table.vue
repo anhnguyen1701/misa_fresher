@@ -94,7 +94,7 @@
         </span>
       </div>
     </div>
-    <Dialog ref="dialog" v-model="modalItem"></Dialog>
+    <Dialog ref="dialog"></Dialog>
   </div>
 </template>
 
