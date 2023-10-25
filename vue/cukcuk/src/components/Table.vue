@@ -23,7 +23,7 @@
       <table>
         <thead>
           <tr>
-            <th class="txt-center" style="width: 60px">
+            <th class="txt-center wrap" style="min-width: 60px">
               <input type="checkbox" class="checkbox" />
             </th>
             <th class="txt-left">Mã nhân viên</th>
@@ -41,7 +41,7 @@
         </thead>
         <tbody>
           <tr v-for="item in items" v-bind:key="item.EmployeeId">
-            <td class="txt-center">
+            <td class="txt-center wrap">
               <input
                 type="checkbox"
                 class="checkbox"
@@ -231,7 +231,7 @@ export default {
 <style scoped>
 .table {
   background-color: #fff;
-  width: 98%;
+  max-width: 96vw;
   height: 92%;
   padding: 10px;
   margin-top: 16px;
@@ -320,6 +320,12 @@ thead {
   background-color: var(--gray-2);
 }
 
+th:not(.wrap),
+td:not(.wrap) {
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
 th,
 td {
   /* text-align: center; */
@@ -332,9 +338,11 @@ tr:hover {
 
 .main {
   margin-top: 12px;
-  /* min-height: 100px; */
   max-height: 66vh;
+  max-width: 100vw;
   overflow-y: scroll;
+  overflow-x: scroll;
+
   border: 1px solid var(--gray-2);
   border-radius: 3px;
 }
